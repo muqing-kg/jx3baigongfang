@@ -1,0 +1,15 @@
+{
+  "method": "piecewise-linear",
+  "extrapolation": "last-segment-linear",
+  "roundTo": 10,
+  "observedAt": "2026-11-19",
+  "source": "用户提供的游戏内观测；暂按八技艺共用门槛模拟，尚未核实技艺间差异",
+  "description": "保留用户提供的5个观测点，点间分段线性插值，31级起按11至30级平均增幅外推；推算值四舍五入到10，1650不作为上限",
+  "observations": [
+    { "level": 1, "exp": 250 },
+    { "level": 3, "exp": 510 },
+    { "level": 8, "exp": 1150 },
+    { "level": 11, "exp": 1370 },
+    { "level": 30, "exp": 1650 }
+  ]
+}

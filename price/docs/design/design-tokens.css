@@ -1,0 +1,171 @@
+/* ==========================================================================
+   数据看板 · 通用设计令牌（与行业无关）
+   用法：<html class="dark"> 或默认亮色；hsl(var(--token)) 组合使用
+   ========================================================================== */
+
+@layer base {
+  :root {
+    /* 基础语义（亮色） */
+    --background: 0 0% 96%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    /* 侧栏 */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 2 100% 44%;          /* 品牌红 #E10600 */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* 图表序列 */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* 语义状态（与行业无关） */
+    --peak: 271.48 81.33% 55.88%;
+    --peak-light: 270 95.24% 75.29%;
+    --positive: 142 69% 58%;
+    --positive-text: 160.118 84.08% 39.412%;
+    --warning: 45 93% 47%;
+    --danger: 345 88% 52%;
+    --info: 217 91% 60%;
+
+    /* 形状 */
+    --radius: 0.5rem;                        /* 卡片 8 / 控件 6 / 标签 4 */
+    --sidebar-width: 256px;
+    --sidebar-width-collapsed: 56px;
+    --header-height: 64px;
+    --content-max: 1920px;
+
+    /* 滚动条 */
+    --scrollbar-thumb: #0f172a40;
+    --scrollbar-thumb-hover: #0f172a66;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;            /* #020817 */
+    --foreground: 210 40% 98%;               /* #F8FAFC */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;     /* #94A3B8 */
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;             /* #1E293B */
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    --sidebar-background: 222.2 47.4% 11.2%; /* #0F172A */
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --peak: 280 100% 65%;
+    --warning: 52 95% 50%;
+
+    --scrollbar-thumb: #fff3;
+    --scrollbar-thumb-hover: #ffffff59;
+  }
+
+  /* 基础排版 */
+  html {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* 卡片：与底色同色，仅靠描边分层 */
+  .ds-card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+  }
+
+  /* 控件 */
+  .ds-control {
+    height: 32px;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid hsl(var(--border));
+    padding-inline: 8px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .ds-control:hover { border-color: hsl(var(--ring)); }
+
+  /* 表头 / 微标签 */
+  .ds-label {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+  .ds-micro {
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* 焦点 */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring) / 0.5);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

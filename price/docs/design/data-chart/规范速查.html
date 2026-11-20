@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据图规范 · 速查</title>
+<style>
+  :root, [data-theme="light"] {
+    color-scheme: light;
+    --dv-canvas: #ffffff;
+    --dv-canvas-muted: #f5f5f5;
+    --dv-text: #020817;
+    --dv-text-muted: #64748b;
+    --dv-grid: #e5e5e5;
+    --dv-footer-bg: #f5f5f5;
+    --dv-footer-text: #000000;
+    --dv-footer-meta: #666e7c;
+    --dv-tooltip-bg: #ffffff;
+    --dv-tooltip-border: #e5e5e5;
+    --dv-focus: #1d4ed8;
+    --dv-selection: #020817;
+    --dv-hover: rgba(2, 8, 23, 0.04);
+    --dv-brand: #e10600;
+    --dv-font: Inter, "Geist Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --dv-canvas: #10192b;
+    --dv-canvas-muted: #02081a;
+    --dv-text: #f8fafc;
+    --dv-text-muted: #94a3b8;
+    --dv-grid: #1c2535;
+    --dv-footer-bg: #02081a;
+    --dv-footer-text: #f8fafc;
+    --dv-footer-meta: #8a94a6;
+    --dv-tooltip-bg: #0b1220;
+    --dv-tooltip-border: #1c2535;
+    --dv-focus: #93c5fd;
+    --dv-selection: #f8fafc;
+    --dv-hover: rgba(248, 250, 252, 0.06);
+    --dv-brand: #e10600;
+  }
+
+  .group-1  { --dv-group: #28f3d2; --dv-group-whisker: #24dbbd; --dv-group-median: #178e7b; --dv-group-tint: #e5fefa; }
+  .group-2  { --dv-group: #ff8000; --dv-group-whisker: #e67300; --dv-group-median: #954b00; --dv-group-tint: #fff0e0; }
+  .group-3  { --dv-group: #3671c6; --dv-group-whisker: #3166b2; --dv-group-median: #204274; --dv-group-tint: #e7eef8; }
+  .group-4  { --dv-group: #e80020; --dv-group-whisker: #d1001d; --dv-group-median: #880013; --dv-group-tint: #fce0e4; }
+  .group-5  { --dv-group: #6692ff; --dv-group-whisker: #5c83e6; --dv-group-median: #3c5595; --dv-group-tint: #edf2ff; }
+  .group-6  { --dv-group: #ff2d00; --dv-group-whisker: #e62800; --dv-group-median: #951a00; --dv-group-tint: #ffe6e0; }
+  .group-7  { --dv-group: #0093cc; --dv-group-whisker: #0084b8; --dv-group-median: #005677; --dv-group-tint: #e0f2f9; }
+  .group-8  { --dv-group: #229971; --dv-group-whisker: #1f8a66; --dv-group-median: #145a42; --dv-group-tint: #e4f3ee; }
+  .group-9  { --dv-group: #64c4ff; --dv-group-whisker: #5ab0e6; --dv-group-median: #3a7395; --dv-group-tint: #ecf8ff; }
+  .group-10 { --dv-group: #b6babd; --dv-group-whisker: #a4a7aa; --dv-group-median: #6a6d6f; --dv-group-tint: #f6f7f7; }
+  .group-11 { --dv-group: #909090; --dv-group-whisker: #828282; --dv-group-median: #545454; --dv-group-tint: #f2f2f2; }
+  [data-theme="dark"] .group-1  { --dv-group-tint: #143933; }
+  [data-theme="dark"] .group-2  { --dv-group-tint: #3b240d; }
+  [data-theme="dark"] .group-3  { --dv-group-tint: #172131; }
+  [data-theme="dark"] .group-4  { --dv-group-tint: #370d13; }
+  [data-theme="dark"] .group-5  { --dv-group-tint: #1f273b; }
+  [data-theme="dark"] .group-6  { --dv-group-tint: #3b150d; }
+  [data-theme="dark"] .group-7  { --dv-group-tint: #0d2832; }
+  [data-theme="dark"] .group-8  { --dv-group-tint: #132921; }
+  [data-theme="dark"] .group-9  { --dv-group-tint: #1f303b; }
+  [data-theme="dark"] .group-10 { --dv-group-tint: #2e2f2f; }
+  [data-theme="dark"] .group-11 { --dv-group-tint: #272727; }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--dv-canvas); color: var(--dv-text);
+    font: 400 14px/1.6 var(--dv-font);
+    transition: background-color 200ms linear, color 200ms linear;
+  }
+  a { color: inherit; }
+  .mono { font-variant-numeric: tabular-nums; }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 24px; border-bottom: 1px solid var(--dv-grid);
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--dv-canvas) 92%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .brandline { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .mark {
+    width: 28px; height: 28px; border-radius: 7px; background: var(--dv-brand);
+    color: #fff; display: grid; place-items: center; font: 800 11px/1 var(--dv-font);
+  }
+  .topbar .meta { color: var(--dv-text-muted); font-size: 12px; }
+  .btn {
+    height: 32px; padding: 0 12px; border: 1px solid var(--dv-grid); border-radius: 6px;
+    background: transparent; color: var(--dv-text); font: 600 12px/1 var(--dv-font); cursor: pointer;
+  }
+  .btn:hover { background: var(--dv-hover); }
+  .btn:focus-visible { outline: 2px solid var(--dv-focus); outline-offset: 2px; }
+
+  .page { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .hero { padding: 64px 0 24px; border-bottom: 1px solid var(--dv-grid); }
+  .eyebrow { margin: 0 0 14px; font: 600 11px/16px var(--dv-font); letter-spacing: .12em; text-transform: uppercase; color: var(--dv-text-muted); }
+  .hero h1 { margin: 0; font: 700 56px/1.04 var(--dv-font); letter-spacing: -.035em; }
+  .hero .lede { max-width: 760px; margin: 18px 0 0; font-size: 17px; line-height: 1.75; color: var(--dv-text-muted); }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .pill { border: 1px solid var(--dv-grid); border-radius: 9999px; padding: 5px 11px; font: 600 11px/16px var(--dv-font); color: var(--dv-text-muted); }
+  .pill strong { color: var(--dv-text); font-weight: 700; }
+
+  section.block { padding: 44px 0 6px; }
+  .section-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+  .section-head .num { font: 700 12px/20px var(--dv-font); color: var(--dv-text-muted); letter-spacing: .08em; }
+  .section-head h2 { margin: 0; font: 700 24px/30px var(--dv-font); letter-spacing: -.01em; }
+  .section-head p { margin: 0 0 0 auto; color: var(--dv-text-muted); font-size: 12px; }
+
+  .card { border: 1px solid var(--dv-grid); border-radius: 8px; padding: 20px; }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 900px) { .g2, .g3, .g4 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 38px; }
+    .g2, .g3, .g4 { grid-template-columns: 1fr; }
+    .page { padding: 0 16px; }
+    .topbar { padding: 14px 16px; }
+    .topbar .meta { display: none; }
+  }
+
+  .measure { display: flex; flex-direction: column; border: 1px solid var(--dv-grid); border-radius: 8px; overflow: hidden; }
+  .measure-row { display: grid; grid-template-columns: 1.15fr .55fr 1.6fr; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--dv-grid); font-size: 12px; }
+  .measure-row:last-child { border-bottom: 0; }
+  .measure-row b { font-weight: 700; }
+  .measure-row span:last-child { color: var(--dv-text-muted); }
+  .measure-row .val { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  .canvas-demo { position: relative; border: 1px solid var(--dv-grid); border-radius: 8px; padding: 22px 22px 0; background: var(--dv-canvas); overflow: hidden; }
+  .canvas-demo .demo-title { font: 700 32px/1.1 var(--dv-font); letter-spacing: -.02em; }
+  .canvas-demo .demo-gap { height: 26px; }
+  .canvas-demo .demo-plot {
+    height: 190px; position: relative;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 37px, var(--dv-grid) 37px 39px);
+  }
+  .canvas-demo .demo-plot::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(to right, transparent 0 63px, var(--dv-grid) 63px 65px);
+  }
+  .demo-dot { position: absolute; width: 11px; height: 11px; border-radius: 50%; background: var(--dv-group); z-index: 2; transform: translate(-50%, -50%); }
+  .canvas-demo .demo-x { display: flex; justify-content: space-between; padding: 10px 0 18px; font: 500 11px/1 var(--dv-font); color: var(--dv-text-muted); }
+  .canvas-demo .demo-footer { margin: 0 -22px; padding: 12px 22px; background: var(--dv-footer-bg); display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--dv-footer-meta); }
+  .canvas-demo .demo-footer b { color: var(--dv-footer-text); font-size: 12px; }
+
+  .swatch { border: 1px solid var(--dv-grid); border-radius: 6px; overflow: hidden; }
+  .swatch .chip { height: 54px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.07); }
+  .swatch .info { padding: 9px 10px; font-size: 11px; line-height: 1.5; }
+  .swatch .info b { display: block; font-size: 12px; }
+  .swatch .info span { color: var(--dv-text-muted); }
+
+  .group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 8px; }
+  .group-tile { border: 1px solid var(--dv-grid); border-radius: 6px; padding: 10px; display: flex; gap: 9px; align-items: center; }
+  .group-tile .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--dv-group); flex: none; }
+  .group-tile b { display: block; font-size: 12px; line-height: 1.35; }
+  .group-tile span { display: block; font-size: 10px; color: var(--dv-text-muted); font-variant-numeric: tabular-nums; }
+
+  .ramp { height: 44px; border-radius: 4px; border: 1px solid var(--dv-grid); }
+  .ramp-labels { display: flex; justify-content: space-between; margin-top: 6px; font: 500 11px/1 var(--dv-font); color: var(--dv-text-muted); }
+  .heat-samples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .heat-sample { width: 58px; height: 42px; display: grid; place-items: center; border-radius: 2px; font: 700 14px/1 var(--dv-font); font-variant-numeric: tabular-nums; }
+
+  .type-row { display: flex; align-items: baseline; gap: 18px; padding: 12px 0; border-bottom: 1px solid var(--dv-grid); }
+  .type-row:last-child { border-bottom: 0; }
+  .type-row .spec { width: 140px; flex: none; font: 500 10px/14px var(--dv-font); color: var(--dv-text-muted); }
+  .type-row .t40 { font: 700 40px/1.05 var(--dv-font); letter-spacing: -.02em; }
+  .type-row .t24 { font: 700 24px/1.1 var(--dv-font); font-variant-numeric: tabular-nums; }
+  .type-row .t20 { font: 600 20px/1.2 var(--dv-font); letter-spacing: .02em; }
+  .type-row .t18 { font: 500 18px/1.2 var(--dv-font); color: var(--dv-text-muted); font-variant-numeric: tabular-nums; }
+  .type-row .t14 { font: 400 14px/1.5 var(--dv-font); color: var(--dv-text-muted); }
+
+  .mini-heat { width: 100%; border-collapse: collapse; table-layout: fixed; font-variant-numeric: tabular-nums; }
+  .mini-heat th { padding: 0 0 7px; font: 600 9px/1 var(--dv-font); letter-spacing: .08em; color: var(--dv-text-muted); text-align: center; }
+  .mini-heat th:first-child { text-align: right; padding-right: 10px; }
+  .mini-heat td { height: 40px; text-align: center; font: 700 15px/1 var(--dv-font); padding: 0; }
+  .mini-heat tbody th { text-align: right; padding-right: 10px; font: 600 11px/1 var(--dv-font); color: var(--dv-text-muted); width: 44px; }
+  .mini-heat td:hover { box-shadow: inset 0 0 0 2px var(--dv-selection); cursor: crosshair; }
+
+  .mini-strip { position: relative; height: 236px; }
+  .mini-strip .hgrid { position: absolute; inset: 0; background-image: repeating-linear-gradient(to bottom, transparent 0 47px, var(--dv-grid) 47px 49px); }
+  .mini-strip .cols { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, 1fr); }
+  .mini-strip .col { position: relative; border-right: 1px solid var(--dv-grid); }
+  .mini-strip .col:last-child { border-right: 0; }
+  .mini-strip .dot { position: absolute; left: 50%; width: 11px; height: 11px; border-radius: 50%; transform: translate(-50%, -50%); background: var(--dv-group); z-index: 2; }
+  .mini-strip .dot:hover { box-shadow: 0 0 0 2px var(--dv-canvas), 0 0 0 4px var(--dv-selection); z-index: 5; }
+  .mini-labels { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 8px; }
+  .mini-labels span { font: 500 11px/1 var(--dv-font); color: var(--dv-text-muted); transform: rotate(-45deg); transform-origin: top center; }
+
+  .mini-box { position: relative; height: 236px; border-bottom: 1px solid var(--dv-grid); }
+  .mini-box .hgrid { position: absolute; inset: 0; background-image: repeating-linear-gradient(to bottom, transparent 0 58px, var(--dv-grid) 58px 60px); }
+  .mini-box .cols { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, 1fr); }
+  .mini-box .col { position: relative; }
+  .mini-box .whisker { position: absolute; left: 50%; width: 2px; transform: translateX(-50%); background: var(--dv-group-whisker); }
+  .mini-box .cap { position: absolute; left: 50%; width: 30px; height: 2px; transform: translateX(-50%); background: var(--dv-group-whisker); }
+  .mini-box .box { position: absolute; left: 50%; width: 48px; transform: translateX(-50%); background: var(--dv-group); }
+  .mini-box .median { position: absolute; left: 50%; width: 48px; height: 4px; transform: translateX(-50%); background: var(--dv-group-median); }
+  .mini-box-labels { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 8px; }
+  .mini-box-labels span { font: 500 11px/1 var(--dv-font); color: var(--dv-text-muted); text-align: center; }
+
+  .state-strip { display: flex; align-items: center; justify-content: center; gap: 18px; height: 120px; }
+  .state-strip .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--dv-group); }
+  .state-strip .dot.dim { opacity: .25; }
+  .state-strip .dot.hot { box-shadow: 0 0 0 2px var(--dv-canvas), 0 0 0 4px var(--dv-selection); }
+  .state-card { border: 1px solid var(--dv-grid); border-radius: 6px; overflow: hidden; }
+  .state-card .cap { padding: 9px 12px; border-top: 1px solid var(--dv-grid); font-size: 11px; color: var(--dv-text-muted); display: flex; justify-content: space-between; }
+
+  .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .checklist li { display: flex; gap: 9px; align-items: flex-start; font-size: 12px; line-height: 1.5; }
+  .checklist li::before { content: ""; width: 14px; height: 14px; flex: none; margin-top: 2px; border: 1px solid var(--dv-text-muted); border-radius: 3px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+  .do, .dont { border: 1px solid var(--dv-grid); border-radius: 8px; padding: 16px 18px; }
+  .do h3, .dont h3 { margin: 0 0 10px; font: 700 13px/18px var(--dv-font); }
+  .do ul, .dont ul { margin: 0; padding-left: 18px; color: var(--dv-text-muted); font-size: 12px; line-height: 1.75; }
+  .do h3::before { content: "✓ "; }
+  .dont h3::before { content: "✕ "; }
+
+  .footnote { color: var(--dv-text-muted); font-size: 11px; line-height: 1.6; }
+  .footnote a { text-decoration: underline; text-underline-offset: 2px; }
+  .spacer { height: 40px; }
+
+  .dv-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 88px; padding: 0 32px; margin-top: 42px; background: var(--dv-footer-bg);
+  }
+  .dv-footer__brand { display: flex; align-items: center; gap: 8px; color: var(--dv-footer-text); text-decoration: none; font: 700 26px/32px var(--dv-font); letter-spacing: -.01em; }
+  .dv-footer__logo { width: 40px; height: 40px; border-radius: 10px; background: var(--dv-brand); display: grid; place-items: center; flex: none; color: #fff; font: 800 13px/1 var(--dv-font); }
+  .dv-footer__meta { color: var(--dv-footer-meta); text-decoration: none; font: 400 22px/30px var(--dv-font); }
+  @media (max-width: 768px) {
+    .dv-footer { height: 64px; padding: 0 16px; }
+    .dv-footer__brand { font-size: 20px; }
+    .dv-footer__meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brandline">
+    <span class="mark" aria-hidden="true">DV</span>
+    <span>数据图规范</span>
+    <span class="meta">/ 速查 v1.0</span>
+  </div>
+  <button class="btn" id="themeToggle" type="button" aria-pressed="false">切换暗色</button>
+</header>
+
+<main class="page">
+
+  <section class="hero">
+    <p class="eyebrow">DATA CHART · VISUAL LANGUAGE</p>
+    <h1>一张图<br />怎么被看见</h1>
+    <p class="lede">从一套公开数据看板提炼出的“海报式做法”：一图一页、不要外框、对象色即身份、数字常驻。<br />这不是仪表盘模板，而是一套让单张图可以被截图、被引用、被记住的规则。</p>
+    <div class="pills">
+      <span class="pill"><strong>约 1600</strong> 宽参考画面</span>
+      <span class="pill"><strong>11</strong> 组对象色</span>
+      <span class="pill"><strong>2</strong> 套主题</span>
+      <span class="pill"><strong>无</strong> 外框 / 圆角 / 阴影</span>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h2>画面与版式</h2>
+      <p>按约 1600 宽的参考画面测量</p>
+    </div>
+    <div class="grid g2">
+      <div class="measure">
+        <div class="measure-row"><b>页边距</b><span class="val">30 像素</span><span>标题左边缘；页脚 32 像素</span></div>
+        <div class="measure-row"><b>标题</b><span class="val">40 / 44 / 粗</span><span>左对齐，距顶 32 像素</span></div>
+        <div class="measure-row"><b>标题到图</b><span class="val">35 像素</span><span>不塞副标题或筛选</span></div>
+        <div class="measure-row"><b>图到页脚</b><span class="val">42 像素</span><span>固定节奏</span></div>
+        <div class="measure-row"><b>页脚</b><span class="val">88 像素</span><span>Logo 40 像素 + 品牌 26/32 粗</span></div>
+        <div class="measure-row"><b>左右留白</b><span class="val">139 / 92</span><span>列距 68 像素</span></div>
+      </div>
+      <div class="canvas-demo" aria-label="版式示意">
+        <div class="demo-title">哪个对象最稳？</div>
+        <div class="demo-gap"></div>
+        <div class="demo-plot">
+          <span class="demo-dot group-1" style="left:6.25%;top:32%"></span>
+          <span class="demo-dot group-1" style="left:6.25%;top:55%"></span>
+          <span class="demo-dot group-2" style="left:18.75%;top:25%"></span>
+          <span class="demo-dot group-2" style="left:18.75%;top:62%"></span>
+          <span class="demo-dot group-3" style="left:31.25%;top:48%"></span>
+          <span class="demo-dot group-4" style="left:56.25%;top:38%"></span>
+          <span class="demo-dot group-4" style="left:56.25%;top:70%"></span>
+          <span class="demo-dot group-9" style="left:81.25%;top:58%"></span>
+          <span class="demo-dot group-8" style="left:93.75%;top:44%"></span>
+        </div>
+        <div class="demo-x"><span>对象 A</span><span>对象 B</span><span>对象 C</span><span>对象 D</span><span>对象 E</span><span>对象 F</span><span>对象 G</span><span>对象 H</span></div>
+        <div class="demo-footer"><b>数据看板</b><span>example.com</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h2>颜色</h2>
+      <p>明暗两套，对象色不随主题变化</p>
+    </div>
+    <div class="grid g4" id="themeSwatches"></div>
+
+    <div style="margin-top: 28px" class="grid g3">
+      <div class="card">
+        <div style="font: 700 13px/18px var(--dv-font)">底色分层</div>
+        <p class="footnote" style="margin: 8px 0 14px">画面比页脚亮一阶，夜晚不是纯黑。</p>
+        <div style="display: grid; gap: 6px">
+          <div style="height: 34px; border-radius: 4px; background: var(--dv-canvas); border: 1px solid var(--dv-grid); display: flex; align-items: center; padding: 0 10px; font-size: 11px">画面 · <span style="margin-left: 6px">白天纸白 / 夜晚深蓝</span></div>
+          <div style="height: 34px; border-radius: 4px; background: var(--dv-footer-bg); display: flex; align-items: center; padding: 0 10px; font-size: 11px; color: var(--dv-footer-meta)">页脚 · <span style="margin-left: 6px">白天浅灰 / 夜晚近黑</span></div>
+          <div style="height: 34px; border-radius: 4px; background: var(--dv-tooltip-bg); border: 1px solid var(--dv-tooltip-border); display: flex; align-items: center; padding: 0 10px; font-size: 11px">说明浮窗 · <span style="margin-left: 6px">白天白 / 夜晚深蓝</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font: 700 13px/18px var(--dv-font)">品牌色</div>
+        <p class="footnote" style="margin: 8px 0 14px">只属于 Logo，不进入数据。</p>
+        <div style="height: 72px; border-radius: 6px; background: var(--dv-brand); display: grid; place-items: center; color: #fff; font: 800 18px/1 var(--dv-font)">DV</div>
+        <div class="footnote" style="margin-top: 8px">签名专用 · 白字清晰可读</div>
+      </div>
+      <div class="card">
+        <div style="font: 700 13px/18px var(--dv-font)">两条用色底线</div>
+        <ul class="footnote" style="margin: 8px 0 0; padding-left: 16px">
+          <li>彩色面积可以大，但必须全部承载数据。</li>
+          <li>品牌色与数据色不同时出现在同一层级。</li>
+          <li>同组对象共用色值，靠对象代码区分。</li>
+          <li>文字永不用对象色。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h2>分组色</h2>
+      <p>11 组对象 · 同组同色</p>
+    </div>
+    <div class="group-grid" id="groupGrid"></div>
+    <p class="footnote" style="margin-top: 12px">鼠标移上或点击时，只改明暗与细边，不改主色。浅色底上，青绿、浅蓝、浅灰几种颜色偏淡，需要加一道细深边，或把点放大一点。</p>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">04</span>
+      <h2>强弱色</h2>
+      <p>0 → 100 · 数值越大越重</p>
+    </div>
+    <div class="card">
+      <div class="ramp" id="ramp"></div>
+      <div class="ramp-labels"><span>0 · 低</span><span>50</span><span>100 · 高</span></div>
+      <div class="heat-samples" id="heatSamples"></div>
+      <p class="footnote" style="margin: 14px 0 0">深色块用白字，浅色块用深字。参考图中段用了偏灰的白字，读起来吃力，不要照抄。</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>字体大小</h2>
+      <p>标题大、图内字稳、数字对齐</p>
+    </div>
+    <div class="card">
+      <div class="type-row"><div class="spec">页面标题 · 40/44 · 粗</div><div class="t40">哪个对象最稳？</div></div>
+      <div class="type-row"><div class="spec">矩阵数字 · 24/28 · 粗</div><div class="t24">98&nbsp;&nbsp;96&nbsp;&nbsp;94&nbsp;&nbsp;92&nbsp;&nbsp;90</div></div>
+      <div class="type-row"><div class="spec">对象代码 · 20/24 · 半粗</div><div class="t20">A&nbsp;&nbsp;B&nbsp;&nbsp;C&nbsp;&nbsp;D&nbsp;&nbsp;E&nbsp;&nbsp;F</div></div>
+      <div class="type-row"><div class="spec">刻度 · 18/24 · 中等</div><div class="t18">100&nbsp;&nbsp;90&nbsp;&nbsp;80&nbsp;&nbsp;70&nbsp;&nbsp;60</div></div>
+      <div class="type-row"><div class="spec">正文 · 14/20 · 常规</div><div class="t14">须 = 中间一半再向两边各延伸 1.5 倍 · 48 条记录 · 更新于 2 分钟前</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">06</span>
+      <h2>三张图</h2>
+      <p>同一套画面规则，不同的答案</p>
+    </div>
+
+    <div class="grid g2" style="align-items: start">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px">
+          <div><div style="font: 700 15px/20px var(--dv-font)">色块矩阵</div><div class="footnote">哪个对象在单点上最强？</div></div>
+          <span class="badge" style="font-size:11px;color:var(--dv-text-muted)">示例 10 名</span>
+        </div>
+        <table class="mini-heat" id="miniHeat" aria-label="色块矩阵示意"></table>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px">
+          <div><div style="font: 700 15px/20px var(--dv-font)">分布点图</div><div class="footnote">哪个对象稳定？有没有异常记录？</div></div>
+          <span class="badge" style="font-size:11px;color:var(--dv-text-muted)">11 像素点</span>
+        </div>
+        <div class="mini-strip" id="miniStrip">
+          <div class="hgrid"></div>
+          <div class="cols" id="stripCols"></div>
+        </div>
+        <div class="mini-labels" id="stripLabels"></div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="align-items: start; margin-top: 16px">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px">
+          <div><div style="font: 700 15px/20px var(--dv-font)">区间图</div><div class="footnote">哪个对象的典型水平最好？</div></div>
+          <span class="badge" style="font-size:11px;color:var(--dv-text-muted)">箱宽 48 像素</span>
+        </div>
+        <div class="mini-box" id="miniBox">
+          <div class="hgrid"></div>
+          <div class="cols" id="boxCols"></div>
+        </div>
+        <div class="mini-box-labels" id="boxLabels"></div>
+      </div>
+
+      <div class="card">
+        <div style="font: 700 15px/20px var(--dv-font); margin-bottom: 10px">状态：默认 / 移上 / 选中</div>
+        <div class="grid g3" style="gap: 10px">
+          <div class="state-card">
+            <div class="state-strip"><span class="dot group-4"></span><span class="dot group-3"></span><span class="dot group-2"></span></div>
+            <div class="cap"><span>默认</span><span>100%</span></div>
+          </div>
+          <div class="state-card">
+            <div class="state-strip"><span class="dot group-4 hot"></span><span class="dot group-3 dim"></span><span class="dot group-2 dim"></span></div>
+            <div class="cap"><span>移上</span><span>100 / 35</span></div>
+          </div>
+          <div class="state-card">
+            <div class="state-strip"><span class="dot group-4 hot"></span><span class="dot group-3 dim"></span><span class="dot group-2 dim"></span></div>
+            <div class="cap"><span>选中</span><span>100 / 25</span></div>
+          </div>
+        </div>
+        <p class="footnote" style="margin: 14px 0 0">移上只加细边、不改底色；选中在细边外留一点画面色空隙；选中不重排、不改坐标范围。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">07</span>
+      <h2>保留 / 避免</h2>
+      <p>最容易被“设计感”带偏的几件事</p>
+    </div>
+    <div class="two-col">
+      <div class="do">
+        <h3>保留</h3>
+        <ul>
+          <li>一图一页，标题即问题；页脚是签名带。</li>
+          <li>无外框、无圆角、无阴影；靠底色分层。</li>
+          <li>细网格、灰色刻度、斜排对象代码。</li>
+          <li>对象色只填数据；数字常驻矩阵单元。</li>
+          <li>分布点 11 像素实心、不左右抖动；区间图用同色深浅。</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h3>避免</h3>
+        <ul>
+          <li>把图塞进外框再加阴影，等于给数据加第二层边框。</li>
+          <li>给矩阵单元加圆角和缝隙，破坏连续扫描。</li>
+          <li>用几十种颜色区分对象，或只靠颜色做图例。</li>
+          <li>给分布点加整体透明度或随机抖动，伪造分布。</li>
+          <li>页脚出处用很淡的灰，矩阵中段用偏灰的白字。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <span class="num">08</span>
+      <h2>上线前检查</h2>
+      <p>逐项可勾选</p>
+    </div>
+    <div class="grid g2">
+      <ul class="checklist">
+        <li>三张图的对象顺序与列位置对得上。</li>
+        <li>选中的对象、主题、排序在刷新后仍保留。</li>
+        <li>不用鼠标也能看到移上后的信息。</li>
+        <li>矩阵每个数字都读得清。</li>
+      </ul>
+      <ul class="checklist">
+        <li>页脚出处换成更深的灰。</li>
+        <li>关闭动效时，画面不跳动。</li>
+        <li>放大到两倍仍不破版。</li>
+        <li>暗色矩阵先用真实数据试一遍。</li>
+      </ul>
+    </div>
+    <p class="footnote" style="margin-top: 16px">完整规范见 <a href="./01-视觉规范.md">视觉规范</a> 与 <a href="./02-交互规范.md">交互规范</a>；具体色值和尺寸见 <a href="./03-制作参数.md">制作参数</a>。</p>
+  </section>
+
+  <div class="spacer"></div>
+</main>
+
+<footer class="dv-footer">
+  <a class="dv-footer__brand" href="./README.md">
+    <span class="dv-footer__logo" aria-hidden="true">DV</span>
+    <span>数据看板</span>
+  </a>
+  <a class="dv-footer__meta" href="https://example.com" target="_blank" rel="noopener">example.com</a>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const initial = localStorage.getItem('data-chart-theme') ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  root.dataset.theme = initial;
+  function syncToggle() {
+    const dark = root.dataset.theme === 'dark';
+    toggle.textContent = dark ? '切换亮色' : '切换暗色';
+    toggle.setAttribute('aria-pressed', String(dark));
+  }
+  syncToggle();
+  toggle.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('data-chart-theme', root.dataset.theme);
+    syncToggle();
+  });
+
+  const STOPS = [
+    [0, '#FFF5F0'], [15, '#FED7C7'], [32, '#FCA082'], [40, '#FC8A6B'],
+    [48, '#FA6F50'], [57, '#F4513B'], [65, '#E6352A'], [73, '#D01F20'],
+    [82, '#B61319'], [90, '#970B13'], [100, '#67000D'],
+  ];
+  const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const hex = (a) => '#' + a.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('');
+  function heatColor(value) {
+    if (!Number.isFinite(value)) return '#EEEEEE';
+    if (value <= 0) return STOPS[0][1];
+    if (value >= 100) return STOPS[STOPS.length - 1][1];
+    for (let i = 1; i < STOPS.length; i++) {
+      const [v1, c1] = STOPS[i - 1];
+      const [v2, c2] = STOPS[i];
+      if (value <= v2) {
+        const t = (value - v1) / (v2 - v1);
+        const a = rgb(c1), b = rgb(c2);
+        return hex(a.map((ch, j) => ch + (b[j] - ch) * t));
+      }
+    }
+    return STOPS[STOPS.length - 1][1];
+  }
+  const lum = (h) => {
+    const [r, g, b] = rgb(h).map((v) => {
+      const c = v / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contrast = (a, b) => {
+    const [l1, l2] = [lum(a), lum(b)].sort((x, y) => y - x);
+    return (l1 + 0.05) / (l2 + 0.05);
+  };
+  const heatText = (bg) => (contrast('#FFFFFF', bg) >= contrast('#0A0A0A', bg) ? '#FFFFFF' : '#0A0A0A');
+
+  const swatches = [
+    ['画面', '#FFFFFF', '#10192B', '主背景'],
+    ['主文字', '#020817', '#F8FAFC', '标题、主要数字'],
+    ['次要文字', '#64748B', '#94A3B8', '刻度、对象代码'],
+    ['网格', '#E5E5E5', '#1C2535', '网格线、分隔线'],
+    ['页脚', '#F5F5F5', '#02081A', '签名色带'],
+    ['页脚出处', '#909090', '#5A5E6A', '偏淡，建议加深'],
+    ['说明浮窗', '#FFFFFF', '#0B1220', '浮在数据之上'],
+    ['品牌色', '#E10600', '#E10600', '只用于签名'],
+  ];
+  document.getElementById('themeSwatches').innerHTML = swatches.map(([name, l, d, use]) => {
+    const dark = root.dataset.theme === 'dark';
+    const c = dark ? d : l;
+    return `<div class="swatch"><div class="chip" style="background:${c}"></div><div class="info"><b>${name}</b><span>${use}</span></div></div>`;
+  }).join('');
+
+  const groups = [
+    ['group-1', '组 1', '01 · 02', '#28F3D2'],
+    ['group-2', '组 2', '03 · 04', '#FF8000'],
+    ['group-3', '组 3', '05 · 06', '#3671C6'],
+    ['group-4', '组 4', '07 · 08', '#E80020'],
+    ['group-5', '组 5', '09 · 10', '#6692FF'],
+    ['group-6', '组 6', '11 · 12', '#FF2D00'],
+    ['group-7', '组 7', '13 · 14', '#0093CC'],
+    ['group-8', '组 8', '15 · 16', '#229971'],
+    ['group-9', '组 9', '17 · 18', '#64C4FF'],
+    ['group-10', '组 10', '19 · 20', '#B6BABD'],
+    ['group-11', '组 11', '21', '#909090'],
+  ];
+  document.getElementById('groupGrid').innerHTML = groups.map(([key, name, objs]) =>
+    `<div class="group-tile ${key}"><span class="dot"></span><span><b>${name}</b><span>对象 ${objs}</span></span></div>`
+  ).join('');
+
+  document.getElementById('ramp').style.background =
+    'linear-gradient(90deg,' + STOPS.map(([v, c]) => `${c} ${v}%`).join(',') + ')';
+  document.getElementById('heatSamples').innerHTML = [0, 15, 40, 65, 82, 100]
+    .map((v) => {
+      const bg = heatColor(v);
+      return `<div class="heat-sample" style="background:${bg};color:${heatText(bg)}">${v}</div>`;
+    }).join('');
+
+  const heatRows = [
+    ['A', [98, 96, 94, 92, 90, 88, 86, 84, 82, 80]],
+    ['B', [97, 95, 93, 91, 89, 87, 85, 83, 81, 79]],
+    ['C', [96, 94, 92, 90, 88, 86, 84, 82, 80, 78]],
+    ['D', [94, 91, 89, 87, 85, 83, 81, 79, 77, 75]],
+    ['E', [92, 89, 87, 85, 83, 81, 79, 77, 75, 73]],
+    ['F', [88, 84, 82, 80, 78, 76, 74, 72, 70, 68]],
+    ['G', [72, 70, 69, 68, 67, 66, 65, 64, 63, 62]],
+    ['H', [60, 58, 57, 56, 55, 55, 54, 52, 51, 50]],
+  ];
+  const header = '<thead><tr><th></th>' + Array.from({ length: 10 }, (_, i) => `<th>第 ${i + 1} 名</th>`).join('') + '</tr></thead>';
+  const body = heatRows.map(([obj, vals]) =>
+    `<tr><th scope="row">${obj}</th>` +
+    vals.map((v) => {
+      const bg = heatColor(v);
+      return `<td style="background:${bg};color:${heatText(bg)}" title="对象 ${obj} · ${v}">${v}</td>`;
+    }).join('') + '</tr>'
+  ).join('');
+  document.getElementById('miniHeat').innerHTML = header + '<tbody>' + body + '</tbody>';
+
+  const stripData = [
+    ['A', 'group-1', 73.8, 74.2, 74.5, 74.9, 75.1, 75.4, 75.8, 76.0, 76.2, 76.6, 77.0, 81.2],
+    ['B', 'group-2', 74.4, 74.6, 75.0, 75.2, 75.5, 75.8, 76.0, 76.4, 77.0, 77.5, 80.9],
+    ['C', 'group-3', 74.1, 74.4, 74.7, 75.0, 75.4, 75.8, 76.2, 76.6, 77.2, 78.1, 80.1],
+    ['D', 'group-4', 74.3, 74.8, 75.1, 75.5, 75.9, 76.3, 76.7, 77.1, 77.6, 80.6],
+    ['E', 'group-5', 74.0, 74.5, 74.9, 75.2, 75.6, 76.0, 76.3, 76.8, 77.4, 80.0],
+    ['F', 'group-6', 74.2, 74.7, 75.0, 75.3, 75.7, 76.0, 76.4, 76.9, 77.3, 78.0],
+    ['G', 'group-7', 74.7, 75.0, 75.2, 75.5, 75.8, 76.1, 76.5, 77.0, 77.5, 79.0],
+    ['H', 'group-8', 74.5, 74.9, 75.1, 75.4, 75.6, 76.0, 76.4, 76.8, 77.2, 78.6],
+  ];
+  const stripCols = document.getElementById('stripCols');
+  const stripLabels = document.getElementById('stripLabels');
+  stripCols.innerHTML = stripData.map(([, g]) => `<div class="col ${g}"></div>`).join('');
+  stripLabels.innerHTML = stripData.map(([obj]) => `<span>${obj}</span>`).join('');
+  stripData.forEach(([, , ...vals], ci) => {
+    const col = stripCols.children[ci];
+    vals.forEach((v) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.top = `${((v - 73) / 10) * 100}%`;
+      dot.title = `对象 ${stripData[ci][0]} · ${v}`;
+      col.appendChild(dot);
+    });
+  });
+
+  const boxData = [
+    ['A', 'group-1', 74.5, 75.0, 76.1, 74.3, 77.7],
+    ['B', 'group-2', 74.6, 75.05, 76.1, 73.8, 78.3],
+    ['C', 'group-3', 74.35, 75.1, 76.6, 74.2, 78.4],
+    ['D', 'group-4', 74.2, 75.2, 76.6, 73.8, 78.7],
+    ['E', 'group-5', 75.0, 75.2, 75.8, 73.9, 77.5],
+    ['F', 'group-6', 74.1, 75.5, 77.0, 74.0, 80.6],
+    ['G', 'group-7', 74.4, 75.95, 77.2, 74.35, 79.0],
+    ['H', 'group-8', 78.0, 79.0, 81.0, 78.0, 81.4],
+  ];
+  const boxCols = document.getElementById('boxCols');
+  const boxLabels = document.getElementById('boxLabels');
+  boxCols.innerHTML = boxData.map(([, g]) => `<div class="col ${g}"></div>`).join('');
+  boxLabels.innerHTML = boxData.map(([obj]) => `<span>${obj}</span>`).join('');
+  boxData.forEach(([, , q1, med, q3, low, high], ci) => {
+    const col = boxCols.children[ci];
+    const pct = (t) => ((t - 73.5) / 9) * 100;
+    const add = (cls, style) => {
+      const el = document.createElement('span');
+      el.className = cls;
+      Object.assign(el.style, style);
+      col.appendChild(el);
+    };
+    add('whisker', { top: `${pct(low)}%`, height: `${pct(high) - pct(low)}%` });
+    add('cap', { top: `${pct(low)}%` });
+    add('cap', { top: `${pct(high)}%` });
+    add('box', { top: `${pct(q3)}%`, height: `${pct(q1) - pct(q3)}%` });
+    add('median', { top: `${pct(med)}%` });
+  });
+</script>
+</body>
+</html>

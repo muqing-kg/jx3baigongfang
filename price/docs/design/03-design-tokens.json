@@ -1,0 +1,112 @@
+{
+  "$meta": {
+    "name": "Data Dashboard Design Tokens",
+    "theme": "dark-first (light theme supported)",
+    "notes": "Color values are HSL triplets compatible with hsl(var(--token)) usage. Domain-neutral: no industry-specific naming.",
+    "version": "1.1.0"
+  },
+  "color": {
+    "semantic": {
+      "background": { "dark": "222.2 84% 4.9%", "light": "0 0% 96%", "hex": "#020817" },
+      "foreground": { "dark": "210 40% 98%", "light": "222.2 84% 4.9%", "hex": "#F8FAFC" },
+      "card": { "dark": "222.2 84% 4.9%", "light": "0 0% 100%" },
+      "cardForeground": { "dark": "210 40% 98%", "light": "222.2 84% 4.9%" },
+      "popover": { "dark": "222.2 84% 4.9%", "light": "0 0% 100%" },
+      "muted": { "dark": "217.2 32.6% 17.5%", "light": "0 0% 96.1%" },
+      "mutedForeground": { "dark": "215 20.2% 65.1%", "light": "215.4 16.3% 46.9%", "hex": "#94A3B8" },
+      "accent": { "dark": "217.2 32.6% 17.5%", "light": "0 0% 96.1%" },
+      "border": { "dark": "217.2 32.6% 17.5%", "light": "214.3 31.8% 91.4%", "hex": "#1E293B" },
+      "input": { "dark": "217.2 32.6% 17.5%", "light": "214.3 31.8% 91.4%" },
+      "ring": { "dark": "212.7 26.8% 83.9%", "light": "222.2 84% 4.9%" },
+      "primary": { "dark": "210 40% 98%", "light": "222.2 47.4% 11.2%" },
+      "primaryForeground": { "dark": "222.2 47.4% 11.2%", "light": "210 40% 98%" },
+      "brand": { "dark": "2 100% 44%", "light": "2 100% 44%", "hex": "#E10600" },
+      "destructive": { "dark": "0 62.8% 30.6%", "light": "0 84.2% 60.2%" }
+    },
+    "sidebar": {
+      "background": { "dark": "222.2 47.4% 11.2%", "light": "0 0% 98%", "hex": "#0F172A" },
+      "foreground": { "dark": "240 4.8% 95.9%", "light": "240 5.3% 26.1%" },
+      "accent": { "dark": "217.2 32.6% 17.5%", "light": "0 0% 95.9%" },
+      "border": { "dark": "240 3.7% 15.9%", "light": "220 13% 91%" }
+    },
+    "chart": {
+      "chart1": { "dark": "220 70% 50%", "light": "12 76% 61%" },
+      "chart2": { "dark": "160 60% 45%", "light": "173 58% 39%" },
+      "chart3": { "dark": "30 80% 55%", "light": "197 37% 24%" },
+      "chart4": { "dark": "280 65% 60%", "light": "43 74% 66%" },
+      "chart5": { "dark": "340 75% 55%", "light": "27 87% 67%" }
+    },
+    "status": {
+      "peak": "280 100% 65%",
+      "positive": "142 69% 58%",
+      "warning": "52 95% 50%",
+      "danger": "345 88% 52%",
+      "info": "217 91% 60%"
+    },
+    "entityBrand": {
+      "usage": "Injected per entity as `entity_color_rgb`; used for fills, borders and gradients only — never for text.",
+      "examplePalette": [
+        "40,243,210",
+        "232,0,32",
+        "54,113,198",
+        "255,128,0",
+        "102,146,255",
+        "0,147,204"
+      ]
+    }
+  },
+  "typography": {
+    "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+    "numeric": "font-variant-numeric: tabular-nums",
+    "scale": {
+      "displayKpi": { "size": "28px", "lineHeight": "32px", "weight": 700 },
+      "h1": { "size": "20px", "lineHeight": "28px", "weight": 600 },
+      "h2": { "size": "20px", "lineHeight": "28px", "weight": 600 },
+      "cardTitle": { "size": "16px", "lineHeight": "24px", "weight": 600 },
+      "body": { "size": "14px", "lineHeight": "20px", "weight": 400 },
+      "label": { "size": "12px", "lineHeight": "16px", "weight": 500, "transform": "uppercase", "tracking": "0.04em" },
+      "micro": { "size": "10px", "lineHeight": "16px", "weight": 600, "transform": "uppercase" },
+      "chartLabel": { "size": "11px", "lineHeight": "16px", "weight": 400 }
+    }
+  },
+  "space": {
+    "unit": "4px",
+    "scale": ["0", "4px", "8px", "12px", "16px", "20px", "24px", "32px", "40px", "48px", "64px"],
+    "pagePadding": { "desktop": "24px", "mobile": "16px" },
+    "cardPadding": { "default": "20px", "dense": "12px" },
+    "gridGap": "16px"
+  },
+  "radius": {
+    "card": "8px",
+    "control": "6px",
+    "badge": "4px",
+    "pill": "9999px",
+    "base": "0.5rem"
+  },
+  "size": {
+    "sidebarWidth": "256px",
+    "sidebarCollapsed": "56px",
+    "headerHeight": "64px",
+    "contentMaxWidth": "1920px",
+    "controlHeight": { "sm": "28px", "md": "32px", "lg": "36px" },
+    "icon": { "sm": "14px", "md": "16px", "lg": "24px" },
+    "tableRow": { "dense": "40px", "default": "48px" }
+  },
+  "elevation": {
+    "card": "none",
+    "popover": "0 12px 48px rgba(0,0,0,0.27)",
+    "focusRing": "0 0 0 2px rgba(148,163,184,0.4)"
+  },
+  "motion": {
+    "duration": { "fast": "150ms", "base": "250ms", "chart": "700ms", "overlay": "180ms" },
+    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "reducedMotion": "respect prefers-reduced-motion: reduce"
+  },
+  "breakpoints": {
+    "sm": "550px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1600px"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "timezone": "Asia/Shanghai",
+  "updatedAt": "2026-11-20T19:07:15+08:00",
+  "catalogVersion": "v3.6",
+  "itemCount": 267,
+  "servers": [
+    {
+      "id": "s_mengjiangnan",
+      "name": "梦江南",
+      "region": "电信一区"
+    },
+    {
+      "id": "s_pozhenzi",
+      "name": "破阵子",
+      "region": "双线一区"
+    },
+    {
+      "id": "s_dielianhua",
+      "name": "蝶恋花",
+      "region": "双线一区"
+    },
+    {
+      "id": "s_jiandan",
+      "name": "剑胆琴心",
+      "region": "双线一区"
+    },
+    {
+      "id": "s_youyuelun",
+      "name": "幽月轮",
+      "region": "双线一区"
+    },
+    {
+      "id": "s_longzheng",
+      "name": "龙争虎斗",
+      "region": "双线二区"
+    },
+    {
+      "id": "s_changancheng",
+      "name": "长安城",
+      "region": "双线二区"
+    },
+    {
+      "id": "s_douzhuang",
+      "name": "斗转星移",
+      "region": "电信一区"
+    },
+    {
+      "id": "s_qiankun",
+      "name": "乾坤一掷",
+      "region": "电信一区"
+    },
+    {
+      "id": "s_weiwo",
+      "name": "唯我独尊",
+      "region": "电信一区"
+    },
+    {
+      "id": "s_juedai",
+      "name": "绝代天骄",
+      "region": "电信五区"
+    },
+    {
+      "id": "s_tianeping",
+      "name": "天鹅坪",
+      "region": "电信五区"
+    },
+    {
+      "id": "s_feilong",
+      "name": "飞龙在天",
+      "region": "双线二区"
+    },
+    {
+      "id": "s_jiutian",
+      "name": "九天",
+      "region": "电信新区"
+    },
+    {
+      "id": "s_meijianxue",
+      "name": "眉间雪",
+      "region": "电信五区"
+    },
+    {
+      "id": "s_shanhai",
+      "name": "山海相逢",
+      "region": "电信五区"
+    },
+    {
+      "id": "s_aoxue",
+      "name": "傲血戰意",
+      "region": "双线三区"
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-11-20",
+      "file": "days/2026-11-20.json",
+      "points": 9,
+      "baseAt": "2026-11-20T10:07:31+08:00",
+      "lastAt": "2026-11-20T19:07:15+08:00",
+      "catalogVersion": "v3.6",
+      "itemCount": 267,
+      "compacted": false,
+      "bytes": 139436
+    }
+  ]
+}

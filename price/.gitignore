@@ -1,0 +1,34 @@
+# macOS / editor noise
+.DS_Store
+**/.DS_Store
+
+# build output
+_site/
+node_modules/
+dist/
+
+# local-only checkout of the GitHub scaffold (do not commit as a submodule)
+JX3-AH-Calculator/
+
+# logs
+*.log
+
+# local auth/tooling (never commit tokens)
+.gh-config/
+.gh-cache/
+.git-askpass.sh
+.dsh-artifacts/
+
+# generated delivery bundle (kept locally, not versioned)
+jianghu-ledger-delivery.zip
+
+# local deploy key (never commit)
+.deploy-key/
+
+# WeChat DevTools local settings (per-user, generated)
+project.private.config.json
+# 仓库根目录不是小程序源码目录；微信工程入口固定为 miniapp/
+/project.config.json
+
+# local Excel build intermediates
+/build/

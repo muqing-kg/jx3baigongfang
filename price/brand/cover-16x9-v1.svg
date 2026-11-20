@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#020817"/>
+      <stop offset="0.55" stop-color="#071326"/>
+      <stop offset="1" stop-color="#0d1e38"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff2a1f"/>
+      <stop offset="0.55" stop-color="#e10600"/>
+      <stop offset="1" stop-color="#9f0000"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#0b4bb3"/>
+      <stop offset="1" stop-color="#45a3ff"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#128a52"/>
+      <stop offset="1" stop-color="#5ff0a4"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#6e2bbb"/>
+      <stop offset="1" stop-color="#c18aff"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe08a"/>
+      <stop offset="1" stop-color="#e8a300"/>
+    </linearGradient>
+    <radialGradient id="glowRed" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e10600" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#e10600" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowBlue" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#1d6fe0" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#1d6fe0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#7aa2d8" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <circle cx="120" cy="220" r="330" fill="url(#glowRed)"/>
+  <circle cx="1060" cy="540" r="380" fill="url(#glowBlue)"/>
+
+  <!-- brand -->
+  <g filter="url(#shadow)">
+    <rect x="64" y="56" width="66" height="66" rx="15" fill="url(#red)"/>
+    <text x="97" y="102" text-anchor="middle" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="40" font-weight="700" fill="#ffffff">价</text>
+  </g>
+  <text x="150" y="92" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="30" font-weight="700" fill="#f8fafc">剑网三物价助手</text>
+  <text x="152" y="118" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="15" font-weight="600" letter-spacing="3" fill="#7f9bbc">JX3 PRICE LEDGER</text>
+
+  <g>
+    <rect x="930" y="62" width="190" height="42" rx="21" fill="#0d1b2f" stroke="#263b56" stroke-width="1"/>
+    <circle cx="954" cy="83" r="6" fill="#45d483"/>
+    <text x="970" y="90" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="18" font-weight="600" fill="#cfe0f5">苍生铸世 · 50级</text>
+  </g>
+
+  <!-- left copy -->
+  <text x="66" y="206" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="21" font-weight="600" letter-spacing="3" fill="#94a3b8">剑网3 · 生活技艺成本榜</text>
+  <text x="62" y="292" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="76" font-weight="700" fill="#f8fafc">剑网三物价助手</text>
+  <rect x="68" y="312" width="180" height="8" rx="4" fill="url(#red)"/>
+  <text x="66" y="366" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="28" font-weight="500" fill="#a9bdd6">每一点精力，都算成收益</text>
+
+  <!-- stats -->
+  <g>
+    <rect x="64" y="418" width="178" height="50" rx="12" fill="#0b1729" stroke="#22334b" stroke-width="1"/>
+    <text x="84" y="451" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="23" font-weight="700" fill="#5ff0a4">154</text>
+    <text x="132" y="450" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="18" fill="#a9bdd6">条配方</text>
+
+    <rect x="254" y="418" width="178" height="50" rx="12" fill="#0b1729" stroke="#22334b" stroke-width="1"/>
+    <text x="274" y="451" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="23" font-weight="700" fill="#45a3ff">272</text>
+    <text x="322" y="450" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="18" fill="#a9bdd6">项物价</text>
+
+    <rect x="444" y="418" width="198" height="50" rx="12" fill="#0b1729" stroke="#22334b" stroke-width="1"/>
+    <text x="464" y="451" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="23" font-weight="700" fill="#c18aff">17</text>
+    <text x="502" y="450" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="18" fill="#a9bdd6">个服务器</text>
+  </g>
+
+  <text x="66" y="556" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="19" fill="#7f9bbc">查配方 · 改物价 · 比精力收益，一页算清</text>
+
+  <!-- right card -->
+  <g filter="url(#shadow)">
+    <rect x="670" y="142" width="466" height="398" rx="22" fill="#071224" stroke="#22334b" stroke-width="1.5"/>
+  </g>
+  <rect x="670" y="142" width="466" height="5" rx="2.5" fill="url(#red)"/>
+  <text x="700" y="194" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="23" font-weight="700" fill="#f8fafc">现在做什么最赚精力？</text>
+  <rect x="990" y="174" width="118" height="28" rx="14" fill="#101f35" stroke="#2a3d57" stroke-width="1"/>
+  <text x="1049" y="193" text-anchor="middle" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" font-weight="600" letter-spacing="2" fill="#94a3b8">TOP 3</text>
+
+  <!-- rows -->
+  <circle cx="704" cy="248" r="16" fill="#2a1740" stroke="#b36bff" stroke-width="1.2"/>
+  <text x="704" y="254" text-anchor="middle" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" font-weight="700" fill="#c18aff">1</text>
+  <text x="734" y="254" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="21" font-weight="600" fill="#f8fafc">璧·苍生</text>
+  <text x="734" y="275" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" fill="#7f9bbc">缝纫 · 200 精力</text>
+  <rect x="880" y="240" width="170" height="12" rx="6" fill="#14243a"/>
+  <rect x="880" y="240" width="170" height="12" rx="6" fill="url(#purple)"/>
+  <text x="1110" y="254" text-anchor="end" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="20" font-weight="700" fill="#c18aff">48.98</text>
+
+  <circle cx="704" cy="322" r="16" fill="#0c2038" stroke="#45a3ff" stroke-width="1.2"/>
+  <text x="704" y="328" text-anchor="middle" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" font-weight="700" fill="#8bc6ff">2</text>
+  <text x="734" y="328" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="21" font-weight="600" fill="#f8fafc">玄元松绿衫</text>
+  <text x="734" y="349" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" fill="#7f9bbc">缝纫 · 200 精力</text>
+  <rect x="880" y="314" width="170" height="12" rx="6" fill="#14243a"/>
+  <rect x="880" y="314" width="158" height="12" rx="6" fill="url(#blue)"/>
+  <text x="1110" y="328" text-anchor="end" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="20" font-weight="700" fill="#8bc6ff">45.98</text>
+
+  <circle cx="704" cy="396" r="16" fill="#0c2a22" stroke="#5ff0a4" stroke-width="1.2"/>
+  <text x="704" y="402" text-anchor="middle" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" font-weight="700" fill="#8af3bd">3</text>
+  <text x="734" y="402" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="21" font-weight="600" fill="#f8fafc">玄元松绿帽</text>
+  <text x="734" y="423" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="14" fill="#7f9bbc">锻造 · 200 精力</text>
+  <rect x="880" y="388" width="170" height="12" rx="6" fill="#14243a"/>
+  <rect x="880" y="388" width="148" height="12" rx="6" fill="url(#green)"/>
+  <text x="1110" y="402" text-anchor="end" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="20" font-weight="700" fill="#8af3bd">43.63</text>
+
+  <line x1="700" y1="456" x2="1106" y2="456" stroke="#1e2f47" stroke-width="1"/>
+  <text x="700" y="490" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="16" fill="#64748b">按每点精力收益排序 · 全站中位 0.67 金/精力</text>
+
+  <!-- bottom disclaimer -->
+  <text x="66" y="620" font-family="PingFang SC, Hiragino Sans GB, Heiti SC, sans-serif" font-size="16" fill="#52657d">非官方玩家工具 · 示例价可校准 · 数据来自当前版本</text>
+</svg>

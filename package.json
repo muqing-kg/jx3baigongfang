@@ -1,0 +1,12 @@
+{
+  "name": "baigong",
+  "private": true,
+  "description": "百工坊 · 剑网3 工具集",
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "start": "node scripts/build.mjs && node scripts/serve.mjs",
+    "logo": "python scripts/make-logo.py"
+  }
+}

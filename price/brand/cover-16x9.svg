@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FCF7EC"/>
+      <stop offset="0.55" stop-color="#F6EEDF"/>
+      <stop offset="1" stop-color="#EFE1C9"/>
+    </linearGradient>
+    <linearGradient id="seal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EF4A36"/>
+      <stop offset="0.55" stop-color="#D0241A"/>
+      <stop offset="1" stop-color="#A80F08"/>
+    </linearGradient>
+    <linearGradient id="barHot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF8A5C"/>
+      <stop offset="1" stop-color="#D8341F"/>
+    </linearGradient>
+    <linearGradient id="barCool" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4A5F80"/>
+      <stop offset="1" stop-color="#33445F"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#3A2A14" flood-opacity="0.28"/>
+    </filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#3A2A14" flood-opacity="0.16"/>
+    </filter>
+    <pattern id="ruled" width="1200" height="54" patternUnits="userSpaceOnUse">
+      <path d="M0 53.5H1200" fill="none" stroke="#8B7A62" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#paper)"/>
+  <rect width="1200" height="675" fill="url(#ruled)"/>
+  <rect x="36" y="30" width="1.5" height="615" fill="#C8102E" opacity="0.16"/>
+  <rect x="1162" y="30" width="1.5" height="615" fill="#C8102E" opacity="0.16"/>
+
+  <!-- brand -->
+  <g filter="url(#softShadow)">
+    <rect x="64" y="46" width="68" height="68" rx="16" fill="url(#seal)"/>
+  </g>
+  <rect x="69" y="51" width="58" height="58" rx="11" fill="none" stroke="#FFF6E8" stroke-opacity="0.35" stroke-width="1.5"/>
+  <text x="98" y="92" text-anchor="middle" font-family="Songti SC, serif" font-size="37" font-weight="900" fill="#FFF8EC">价</text>
+  <text x="150" y="83" font-family="PingFang SC, sans-serif" font-size="30" font-weight="700" fill="#14110D">剑网三物价助手</text>
+  <text x="152" y="110" font-family="PingFang SC, sans-serif" font-size="12" font-weight="600" letter-spacing="2.6" fill="#8B7A62">JX3 PRICE LEDGER · 玩家自制</text>
+
+  <rect x="982" y="44" width="154" height="42" rx="21" fill="#14110D"/>
+  <circle cx="1002" cy="65" r="4" fill="#E8B44A"/>
+  <text x="1064" y="71" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="16" font-weight="600" fill="#F8EFDF">免费 · 免下载</text>
+
+  <!-- left copy -->
+  <rect x="64" y="158" width="6" height="22" rx="3" fill="#C8102E"/>
+  <text x="84" y="176" font-family="PingFang SC, sans-serif" font-size="20" font-weight="600" letter-spacing="2.4" fill="#B4472F">剑网3 · 苍生铸世 50 级</text>
+
+  <text x="64" y="262" font-family="Songti SC, serif" font-size="76" font-weight="900" fill="#14110D">今天精力</text>
+  <text x="62" y="410" font-family="Songti SC, serif" font-size="150" font-weight="900" fill="#14110D">做什么</text>
+  <text x="512" y="410" font-family="Songti SC, serif" font-size="150" font-weight="900" fill="#C8102E">？</text>
+  <path d="M 68 434 C 190 428 360 430 500 425" fill="none" stroke="#C8102E" stroke-opacity="0.85" stroke-width="7" stroke-linecap="round"/>
+  <text x="64" y="470" font-family="PingFang SC, sans-serif" font-size="27" font-weight="600" fill="#3B3229"><tspan fill="#C8102E" font-weight="800">154</tspan> 条制造配方，按本服物价排好队</text>
+
+  <!-- answer card -->
+  <g transform="translate(0 12)">
+    <rect x="680" y="84" width="480" height="460" rx="22" fill="#0B1424" filter="url(#cardShadow)"/>
+    <rect x="680" y="84" width="480" height="8" rx="4" fill="#C8102E"/>
+    <rect x="680.75" y="84.75" width="478.5" height="458.5" rx="21.5" fill="none" stroke="#2A3B55" stroke-width="1.4"/>
+
+    <text x="708" y="134" font-family="Songti SC, serif" font-size="26" font-weight="900" fill="#F5F1E8">本服精力收益榜</text>
+    <rect x="922" y="112" width="70" height="26" rx="13" fill="#3A2A12"/>
+    <text x="957" y="131" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" font-weight="700" fill="#E8B44A">TOP 3</text>
+    <text x="1132" y="131" text-anchor="end" font-family="PingFang SC, sans-serif" font-size="11" font-weight="500" fill="#8FA3BF">金 / 精力</text>
+    <path d="M708 150H1132" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1.2"/>
+
+    <!-- row 1 -->
+    <rect x="696" y="164" width="448" height="112" rx="13" fill="#15223A"/>
+    <rect x="696" y="180" width="5" height="80" rx="2.5" fill="#E8543E"/>
+    <text x="716" y="212" font-family="Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="700" fill="#E8B44A">01</text>
+    <text x="748" y="212" font-family="PingFang SC, sans-serif" font-size="36" font-weight="700" fill="#FFFFFF">归营旌</text>
+    <text x="748" y="240" font-family="PingFang SC, sans-serif" font-size="14" font-weight="500" fill="#8FA3BF">梓匠 · 单次 120 精力</text>
+    <rect x="900" y="198" width="150" height="10" rx="5" fill="#22314A"/>
+    <rect x="900" y="198" width="120" height="10" rx="5" fill="url(#barHot)"/>
+    <text x="1140" y="224" text-anchor="end" font-family="Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700" fill="#FF7A5C">175.25</text>
+
+    <!-- row 2 -->
+    <text x="716" y="320" font-family="Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="700" fill="#6E86A6">02</text>
+    <text x="748" y="320" font-family="PingFang SC, sans-serif" font-size="26" font-weight="600" fill="#E8EDF5">膘然心动</text>
+    <text x="748" y="344" font-family="PingFang SC, sans-serif" font-size="12" font-weight="500" fill="#7E90AA">烹饪 · 单次 50 精力</text>
+    <rect x="900" y="308" width="150" height="8" rx="4" fill="#22314A"/>
+    <rect x="900" y="308" width="68" height="8" rx="4" fill="url(#barCool)"/>
+    <text x="1132" y="330" text-anchor="end" font-family="Helvetica Neue, Arial, sans-serif" font-size="28" font-weight="600" fill="#E8EDF5">81.37</text>
+
+    <!-- row 3 -->
+    <text x="716" y="402" font-family="Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="700" fill="#6E86A6">03</text>
+    <text x="748" y="402" font-family="PingFang SC, sans-serif" font-size="26" font-weight="600" fill="#E8EDF5">定魂丹砂</text>
+    <text x="748" y="426" font-family="PingFang SC, sans-serif" font-size="12" font-weight="500" fill="#7E90AA">制药 · 单次 120 精力</text>
+    <rect x="900" y="390" width="150" height="8" rx="4" fill="#22314A"/>
+    <rect x="900" y="390" width="48" height="8" rx="4" fill="url(#barCool)"/>
+    <text x="1132" y="412" text-anchor="end" font-family="Helvetica Neue, Arial, sans-serif" font-size="28" font-weight="600" fill="#E8EDF5">56.68</text>
+
+    <text x="708" y="512" font-family="PingFang SC, sans-serif" font-size="12" font-weight="500" fill="#7E90AA">共 171 条 · 175.25 ÷ 1.33 ≈ 132×</text>
+    <rect x="1054" y="492" width="78" height="26" rx="5" fill="none" stroke="#E8543E" stroke-opacity="0.55" stroke-width="1.4"/>
+    <text x="1093" y="510" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="#E8543E">示例价</text>
+  </g>
+
+  <g transform="translate(0 12) rotate(-5 1088 212)">
+    <ellipse cx="1088" cy="212" rx="58" ry="25" fill="none" stroke="#FF6B52" stroke-width="3.5" stroke-opacity="0.95"/>
+    <ellipse cx="1090" cy="214" rx="64" ry="28" fill="none" stroke="#FF6B52" stroke-width="1.6" stroke-opacity="0.40"/>
+  </g>
+
+  <!-- bottom -->
+  <text x="64" y="604" font-family="PingFang SC, sans-serif" font-size="18" font-weight="600" fill="#3B3229">改本服物价 <tspan fill="#C8102E" font-weight="800">→</tspan> 自动重算 <tspan fill="#C8102E" font-weight="800">→</tspan> 一眼排序</text>
+  <text x="64" y="652" font-family="PingFang SC, sans-serif" font-size="14" font-weight="500" fill="#9A8B75">非官方玩家工具 · 示例价可校准 · 数据版本 v3.3</text>
+
+  <g transform="rotate(-7 1108 618)">
+    <rect x="1082" y="592" width="52" height="52" rx="5" fill="none" stroke="#C8102E" stroke-width="2.6" stroke-opacity="0.75"/>
+    <text x="1108" y="629" text-anchor="middle" font-family="Songti SC, serif" font-size="28" font-weight="900" fill="#C8102E" opacity="0.8">账</text>
+  </g>
+</svg>

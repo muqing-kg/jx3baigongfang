@@ -1,0 +1,86 @@
+name: Deploy dev preview
+
+# Dev 预览部署：
+#   /            -> main 分支构建（保持生产站不变）
+#   /dev/        -> dev 分支构建（开发在线版，带 DEV 标识）
+# 由于 GitHub Pages 每个仓库只有一个站点，这里把两者打包进同一个 artifact。
+# main 分支的 Deploy site and minitool 也采用同样的合并部署逻辑，因此主站部署
+# 不会清空 /dev/ 预览。
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout main (production)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout dev (preview)
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build production site
+        run: |
+          cd main
+          ./scripts/build-minitool.sh
+          ./scripts/build-site.sh
+
+      - name: Build dev preview
+        run: |
+          cd dev
+          ./scripts/build-minitool.sh
+          ./scripts/build-site.sh
+
+      - name: Combine production and /dev preview
+        run: |
+          mkdir -p _site/dev
+          cp -R main/_site/. _site/
+          cp -R dev/_site/. _site/dev/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: pages
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages-dev
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

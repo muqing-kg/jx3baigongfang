@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=720, initial-scale=1">
+<title>剑网三物价助手 · 小红书图文</title>
+<style>
+  @page { size: 720px 960px; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #e9e4d8; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: #1f2a26;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+  .page {
+    width: 720px;
+    height: 960px;
+    padding: 46px 48px 34px;
+    position: relative;
+    overflow: hidden;
+    background: #faf8f2;
+    border-top: 4px solid #b00020;
+  }
+  .brand {
+    font-size: 15px;
+    letter-spacing: .06em;
+    color: #b00020;
+    font-weight: 600;
+  }
+  .rule {
+    margin-top: 14px;
+    height: 1px;
+    background: #dad4c6;
+  }
+  h1 {
+    margin: 44px 0 0;
+    font-size: 40px;
+    line-height: 1.42;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: #1f2a26;
+  }
+  .sub {
+    margin-top: 14px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #6e766e;
+  }
+  .steps {
+    margin-top: 34px;
+  }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    min-height: 64px;
+  }
+  .step .n {
+    width: 34px;
+    flex: none;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #b00020;
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .step .t {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: #26332e;
+  }
+  .step .t b {
+    color: #1f2a26;
+    font-weight: 600;
+  }
+  .stats {
+    margin-top: 18px;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: #6e766e;
+    letter-spacing: .02em;
+  }
+  .qr-card {
+    margin-top: 24px;
+    width: 624px;
+    height: 166px;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e3ded2;
+    box-shadow: 0 6px 16px rgba(40, 50, 40, .05);
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 14px 22px;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .qr-card:hover {
+    border-color: #e0b3be;
+    box-shadow: 0 8px 20px rgba(40, 50, 40, .09);
+  }
+  .qr-card img {
+    width: 136px;
+    height: 136px;
+    display: block;
+    flex: none;
+  }
+  .qr-text .k {
+    font-size: 18px;
+    line-height: 1.4;
+    color: #b00020;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .qr-text .v {
+    margin-top: 7px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #b00020;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .qr-text .s {
+    margin-top: 6px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: #6e766e;
+  }
+  .foot {
+    position: absolute;
+    left: 48px;
+    right: 48px;
+    bottom: 30px;
+    font-size: 10.5px;
+    line-height: 1.65;
+    color: #747b73;
+  }
+  .foot .line2 { margin-top: 2px; }
+  .foot .meta { margin-top: 5px; color: #9a9f97; font-size: 9.5px; letter-spacing: .02em; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="brand">剑网三物价助手</div>
+  <div class="rule"></div>
+
+  <h1>先打开工具，<br>再算清一炉配方</h1>
+  <div class="sub">剑网3 · 苍生铸世 50 级 · 生活技艺效率计算</div>
+
+  <div class="steps">
+    <div class="step"><div class="n">01</div><div class="t">扫码，或点击下方<b>「打开物价助手」</b></div></div>
+    <div class="step"><div class="n">02</div><div class="t">右上角选<b>你所在的服务器</b>，17 服 + 自定义</div></div>
+    <div class="step"><div class="n">03</div><div class="t">价格库批量粘贴<b>本服材料价格</b>，也可先用示例价</div></div>
+    <div class="step"><div class="n">04</div><div class="t">总览看<b>精力效率 Top 10</b>，决定今天先做哪个</div></div>
+    <div class="step"><div class="n">05</div><div class="t">点配方看<b>成本拆解</b>，或去分析页做 A/B 对比</div></div>
+  </div>
+
+  <div class="stats">154 制造配方 · 17 个采集点 · 263 项物品 · 17 服独立物价</div>
+
+  <a class="qr-card" href="https://cherishxie.github.io/JX3-AH-Calculator/" target="_blank" rel="noopener" aria-label="打开剑网三物价助手在线版">
+    <img src="assets/qr-tool.png" alt="扫码打开工具">
+    <div class="qr-text">
+      <div class="k">扫码打开工具</div>
+      <div class="v">打开物价助手 →</div>
+      <div class="s">手机 / 电脑都能用 · 无需注册 · 数据保存在本机</div>
+    </div>
+  </a>
+
+  <div class="foot">
+    <div>辅助计算，不会自动登录或执行游戏操作。</div>
+    <div class="line2">仅游戏内数值，不涉及现实交易；非官方玩家工具，与游戏厂商无关联。</div>
+    <div class="meta">数据 v3.3 · 核验 2026-11-18 · 价格为样本 / 示例价</div>
+  </div>
+</div>
+</body>
+</html>

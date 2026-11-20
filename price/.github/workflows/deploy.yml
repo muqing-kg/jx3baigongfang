@@ -1,0 +1,165 @@
+name: Deploy site and minitool
+
+# Publishes:
+#   1. the static Web app to GitHub Pages
+#   2. the validated 小红书小工具 zip (download + artifact)
+#
+# One-time setup: Settings -> Pages -> Build and deployment -> Source:
+# "GitHub Actions". GITHUB_TOKEN cannot enable Pages by itself.
+
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: ["Update JX3 prices"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  changelog:
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.release.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate release scripts and breakthrough calculations
+        run: |
+          node scripts/test-changelog.mjs
+          node scripts/test-price-history.mjs
+          node scripts/test-trends.cjs
+          node scripts/sync-breakthrough-model.mjs
+          node scripts/test-breakthrough.cjs
+          ./scripts/build-minitool.sh
+          ./scripts/build-site.sh
+      - name: Update changelog and application release notes
+        id: release
+        run: |
+          node scripts/update-changelog.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md content/updates.json
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: update changelog"
+            git push origin HEAD:main
+          fi
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      # GITHUB_TOKEN pushes do not trigger push workflows. Dependent jobs deploy
+      # the committed changelog in this same run, without a PAT or another dispatch.
+  pages:
+    needs: changelog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout main (production)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.changelog.outputs.revision }}
+          path: main
+
+      - name: Checkout dev (preview)
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build production site
+        run: |
+          cd main
+          ./scripts/build-minitool.sh
+          ./scripts/build-site.sh
+
+      - name: Build dev preview
+        continue-on-error: true
+        run: |
+          cd dev
+          ./scripts/build-site.sh
+
+      - name: Combine production and /dev preview
+        run: |
+          mkdir -p _site
+          cp -R main/_site/. _site/
+          if [ -f dev/_site/index.html ]; then
+            mkdir -p _site/dev
+            cp -R dev/_site/. _site/dev/
+          else
+            echo "WARN: dev preview build missing; production only" >&2
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: pages
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  minitool:
+    needs: changelog
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.changelog.outputs.revision }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build and audit zip
+        run: ./scripts/build-minitool.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jx3-minitool
+          path: 剑网三物价助手-minitool.zip
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Job summary
+        run: |
+          echo "### 小红书小工具" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 稳定下载：https://cherishxie.github.io/JX3-AH-Calculator/downloads/jx3-minitool.zip" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 本次构建：artifact \`jx3-minitool\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- 提交审核：\`npx redminitool upload --file 剑网三物价助手-minitool.zip --type pkg --yes\`" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1600, initial-scale=1">
+<title>剑网三物价助手 · 上手指南（游戏内数值版）</title>
+<style>
+  @page { size: 1600px 1200px; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #d9d2c6; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    color: #171717;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+  .page {
+    width: 1600px;
+    height: 1200px;
+    position: relative;
+    overflow: hidden;
+    padding: 54px 72px 78px;
+    background:
+      radial-gradient(1200px 700px at 82% 8%, #fffaf1 0%, rgba(255,250,241,0) 60%),
+      linear-gradient(180deg, #fbf6ec 0%, #f2e7d5 100%);
+    break-after: page;
+    page-break-after: always;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  .page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(120, 90, 50, .06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(120, 90, 50, .06) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .page::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 8px;
+    background: #b00020;
+  }
+  .top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .mark {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: #b00020; color: #fff;
+    display: grid; place-items: center;
+    font-size: 30px; font-weight: 700;
+    letter-spacing: 0;
+  }
+  .brand-name { font-size: 25px; font-weight: 600; line-height: 1.2; letter-spacing: .01em; }
+  .brand-sub { font-size: 10.5px; color: #6e6458; letter-spacing: .22em; margin-top: 3px; }
+  .top-right { display: flex; align-items: center; gap: 18px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #171717; color: #f8f2e7;
+    border-radius: 999px; padding: 10px 18px;
+    font-size: 14px; letter-spacing: .04em;
+  }
+  .pill.red { background: #b00020; color: #fff; }
+  .page-no { font-size: 13px; color: #6e6458; letter-spacing: .08em; }
+  .content { position: relative; z-index: 2; margin-top: 48px; }
+  .kicker {
+    font-size: 14px; font-weight: 600; letter-spacing: .16em;
+    color: #b00020; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before { content: ""; width: 28px; height: 3px; background: #b00020; display: block; }
+  h1 {
+    margin: 18px 0 0;
+    font-size: 62px; line-height: 1.12; font-weight: 650; letter-spacing: -.015em;
+  }
+  h1 .red { color: #b00020; }
+  h2 {
+    margin: 16px 0 0;
+    font-size: 54px; line-height: 1.14; font-weight: 650; letter-spacing: -.012em;
+  }
+  .lead {
+    margin: 16px 0 0; max-width: 1180px;
+    font-size: 23px; line-height: 1.55; color: #6e6458;
+  }
+  .red { color: #b00020; }
+  .muted { color: #6e6458; }
+  .small { font-size: 15px; line-height: 1.6; color: #6e6458; }
+  .foot {
+    position: absolute; z-index: 2;
+    left: 72px; right: 72px; bottom: 30px;
+    border-top: 1px solid rgba(90, 70, 50, .16);
+    padding-top: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: #6e6458;
+  }
+  .foot b { color: #171717; font-weight: 600; }
+
+  /* cover */
+  .cover { padding-top: 54px; }
+  .cover-grid {
+    position: relative; z-index: 2;
+    margin-top: 56px;
+    display: grid; grid-template-columns: 720px 1fr; gap: 44px;
+    align-items: start;
+  }
+  .cover-kicker { font-size: 15px; letter-spacing: .14em; color: #b00020; font-weight: 600; }
+  .cover h1 { margin-top: 18px; font-size: 72px; line-height: 1.1; }
+  .cover h1 .big { display: block; font-size: 104px; color: #b00020; letter-spacing: -.03em; }
+  .cover .lead { max-width: 660px; margin-top: 22px; font-size: 25px; }
+  .stats { display: flex; gap: 34px; margin-top: 38px; }
+  .stat .n { font-size: 42px; font-weight: 650; line-height: 1; letter-spacing: -.02em; }
+  .stat .n small { font-size: 16px; font-weight: 500; color: #6e6458; margin-left: 3px; }
+  .stat .l { font-size: 14px; color: #6e6458; margin-top: 8px; }
+  .url-box { font-size: 15px; line-height: 1.55; color: #171717; word-break: break-all; }
+  .url-box b { display: block; font-size: 17px; margin-bottom: 6px; }
+  .url-box span { color: #6e6458; }
+  .shot-frame {
+    background: #0b1220; border-radius: 20px; padding: 12px;
+    border: 1px solid #2a3548;
+    box-shadow: 0 28px 60px rgba(50, 30, 10, .18);
+    transform: rotate(-1.2deg);
+  }
+  .shot-frame img { display: block; width: 100%; border-radius: 12px; }
+  .shot-caption { margin-top: 16px; font-size: 14px; color: #6e6458; letter-spacing: .04em; }
+
+  /* generic cards */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+  .card {
+    background: rgba(255, 252, 246, .78);
+    border: 1px solid rgba(90, 70, 50, .16);
+    border-radius: 16px;
+    padding: 22px 24px;
+    box-shadow: 0 10px 24px rgba(60, 40, 20, .05);
+  }
+  .card.dark {
+    background: #0b1220; color: #f8fafc;
+    border-color: #263247;
+    box-shadow: 0 18px 36px rgba(30, 20, 10, .12);
+  }
+  .card.dark .muted { color: #94a3b8; }
+  .access-card { height: 640px; display: flex; flex-direction: column; }
+  .access-card .num { font-size: 15px; font-weight: 700; color: #b00020; letter-spacing: .08em; }
+  .access-card h3 { font-size: 32px; margin: 10px 0 0; font-weight: 650; }
+  .access-card .desc { font-size: 18px; line-height: 1.65; color: #6e6458; margin-top: 12px; }
+  .access-card .grow { flex: 1; }
+  .step-mini { display: flex; gap: 12px; align-items: flex-start; margin-top: 14px; }
+  .step-mini .n {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #b00020; color: #fff; font-size: 13px; font-weight: 700;
+    display: grid; place-items: center; flex: none; margin-top: 2px;
+  }
+  .step-mini p { margin: 0; font-size: 17px; line-height: 1.55; }
+  .notice {
+    margin-top: 26px;
+    background: #171717; color: #f8f2e7;
+    border-radius: 12px; padding: 16px 22px;
+    font-size: 16px; line-height: 1.6;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .notice b { color: #ffb3c0; font-weight: 600; }
+
+  /* steps */
+  .step-card { height: 720px; display: flex; flex-direction: column; }
+  .step-num {
+    font-size: 70px; font-weight: 700; color: #b00020; line-height: .9;
+    letter-spacing: -.04em;
+  }
+  .step-card h3 { font-size: 30px; margin: 8px 0 0; font-weight: 650; }
+  .step-card .desc { font-size: 17px; line-height: 1.6; color: #6e6458; margin-top: 10px; }
+  .step-card .visual { margin-top: 16px; }
+  .step-card .visual img {
+    width: 100%; height: 330px; object-fit: cover;
+    border-radius: 10px; border: 1px solid #263247; display: block;
+  }
+  .fake-select {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: #0b1220; color: #f8fafc;
+    border: 1px solid #334155; border-radius: 10px;
+    padding: 16px 18px; font-size: 18px;
+    margin-top: 10px;
+  }
+  .fake-select .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+  .fake-select .sub { font-size: 12px; color: #94a3b8; }
+  .tip {
+    margin-top: auto; padding-top: 16px;
+    border-top: 1px solid rgba(90, 70, 50, .16);
+    font-size: 15px; line-height: 1.6; color: #6e6458;
+  }
+  .tip b { color: #b00020; }
+  .bottom-tip {
+    margin-top: 24px; font-size: 17px; color: #6e6458;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bottom-tip b { color: #171717; }
+
+  /* module map */
+  .module-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 26px; }
+  .module-card { padding: 14px; height: 372px; display: flex; flex-direction: column; }
+  .module-card img {
+    width: 100%; height: 258px; object-fit: cover;
+    border-radius: 9px; border: 1px solid #263247; display: block;
+  }
+  .module-card .mt { display: flex; align-items: baseline; gap: 10px; margin-top: 13px; }
+  .module-card .mt b { font-size: 13px; color: #b00020; letter-spacing: .06em; }
+  .module-card .mt h3 { font-size: 23px; margin: 0; font-weight: 650; }
+  .module-card p { margin: 5px 0 0; font-size: 14.5px; line-height: 1.5; color: #6e6458; }
+  .module-note { margin-top: 22px; font-size: 15px; color: #6e6458; }
+
+  /* operations */
+  .op-card { height: 378px; display: grid; grid-template-columns: 300px 1fr; gap: 22px; padding: 20px; }
+  .op-card img {
+    width: 300px; height: 225px; object-fit: cover;
+    border-radius: 9px; border: 1px solid #263247;
+  }
+  .op-card h3 { font-size: 26px; margin: 2px 0 0; font-weight: 650; }
+  .op-card .k { font-size: 12px; color: #b00020; letter-spacing: .08em; font-weight: 600; }
+  .op-card ul { margin: 12px 0 0; padding: 0; list-style: none; }
+  .op-card li { font-size: 15.5px; line-height: 1.55; color: #3f3a33; padding-left: 16px; position: relative; margin-top: 7px; }
+  .op-card li::before { content: "→"; position: absolute; left: 0; color: #b00020; }
+  .op-card .note { margin-top: 10px; font-size: 13px; line-height: 1.45; color: #6e6458; }
+
+  /* reading */
+  .reading-grid { display: grid; grid-template-columns: 590px 1fr; gap: 34px; margin-top: 22px; }
+  .formula {
+    background: #0b1220; border-radius: 16px; padding: 26px 28px;
+    border: 1px solid #263247; color: #e2e8f0;
+  }
+  .formula h3 { margin: 0 0 18px; font-size: 22px; color: #fff; font-weight: 600; }
+  .formula .row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid #1e293b; }
+  .formula .row:last-child { border-bottom: 0; }
+  .formula .k { font-size: 14px; color: #94a3b8; }
+  .formula .v { font-size: 14px; color: #fff; text-align: right; }
+  .formula .v b { color: #c4b5fd; font-weight: 600; }
+  .read-tips .tip-block { display: flex; gap: 18px; margin-bottom: 26px; }
+  .read-tips .rn {
+    width: 48px; height: 48px; border-radius: 50%; flex: none;
+    background: #b00020; color: #fff; display: grid; place-items: center;
+    font-size: 20px; font-weight: 700;
+  }
+  .read-tips h4 { margin: 0; font-size: 23px; font-weight: 650; }
+  .read-tips p { margin: 6px 0 0; font-size: 16px; line-height: 1.55; color: #6e6458; }
+  .compare-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .compare-table th {
+    text-align: left; font-size: 13px; color: #6e6458; font-weight: 500;
+    padding: 10px 14px; border-bottom: 1px solid rgba(90, 70, 50, .18);
+    letter-spacing: .04em;
+  }
+  .compare-table td { padding: 12px 14px; font-size: 15px; border-bottom: 1px solid rgba(90, 70, 50, .10); }
+  .compare-table td.bad { color: #9a3412; }
+  .compare-table td.good { color: #166534; font-weight: 600; }
+  .compare-table tr:last-child td { border-bottom: 0; }
+
+  /* mobile */
+  .mobile-grid { display: grid; grid-template-columns: 640px 1fr; gap: 38px; margin-top: 22px; align-items: start; }
+  .mobile-shot {
+    width: 700px; background: #fff; border-radius: 20px; padding: 12px;
+    border: 1px solid rgba(90, 70, 50, .18);
+    box-shadow: 0 20px 40px rgba(60, 40, 20, .10);
+  }
+  .mobile-shot img { width: 100%; display: block; border-radius: 12px; }
+  .mobile-list .item { display: flex; gap: 14px; margin-bottom: 18px; }
+  .mobile-list .ic {
+    width: 38px; height: 38px; border-radius: 10px; flex: none;
+    background: #171717; color: #fff; display: grid; place-items: center;
+    font-size: 15px; font-weight: 700;
+  }
+  .mobile-list h4 { margin: 0; font-size: 20px; font-weight: 650; }
+  .mobile-list p { margin: 3px 0 0; font-size: 15px; line-height: 1.55; color: #6e6458; }
+  .backup {
+    margin-top: 18px; background: #0b1220; color: #f8fafc;
+    border-radius: 14px; padding: 20px 22px;
+  }
+  .backup h4 { margin: 0 0 10px; font-size: 17px; color: #fff; }
+  .backup ol { margin: 0; padding-left: 20px; }
+  .backup li { font-size: 15px; line-height: 1.6; color: #cbd5e1; margin-top: 4px; }
+  .backup b { color: #c4b5fd; }
+
+  /* trust */
+  .data-strip {
+    margin-top: 22px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .data-strip span {
+    background: #171717; color: #f8f2e7;
+    border-radius: 999px; padding: 8px 14px;
+    font-size: 13px;
+  }
+  .data-strip span.red { background: #b00020; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+  .faq {
+    background: rgba(255, 252, 246, .80);
+    border: 1px solid rgba(90, 70, 50, .16);
+    border-radius: 14px; padding: 20px 22px;
+    min-height: 205px;
+  }
+  .faq .q { font-size: 19px; font-weight: 650; }
+  .faq .q span { color: #b00020; margin-right: 8px; }
+  .faq .a { font-size: 14.5px; line-height: 1.6; color: #5b5348; margin-top: 8px; }
+  .disclaimer {
+    margin-top: 24px;
+    background: #0b1220; color: #f8fafc;
+    border-radius: 14px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 22px;
+  }
+  .disclaimer .txt { flex: 1; }
+  .disclaimer .txt b { color: #fff; font-size: 17px; }
+  .disclaimer .txt p { margin: 5px 0 0; font-size: 13.5px; line-height: 1.55; color: #94a3b8; }
+  .disclaimer img { width: 100px; height: 100px; background: #fff; border-radius: 8px; padding: 4px; }
+  .disclaimer .url { font-size: 12px; color: #cbd5e1; line-height: 1.5; word-break: break-all; }
+
+
+  /* cover TOC */
+  .cover-toc {
+    position: absolute; z-index: 2;
+    left: 72px; right: 72px; bottom: 86px;
+    border-top: 1px solid rgba(90, 70, 50, .18);
+    padding-top: 16px;
+    display: flex; align-items: center; gap: 26px;
+    font-size: 14px; color: #6e6458;
+  }
+  .cover-toc b { color: #b00020; font-size: 12px; letter-spacing: .06em; margin-right: 4px; }
+  .cover-toc .sp { flex: 1; }
+  .cover-toc .hint { color: #171717; font-weight: 600; }
+  /* small fit line */
+  .fit {
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid rgba(90, 70, 50, .14);
+    font-size: 13px; line-height: 1.5; color: #6e6458;
+  }
+  .fit b { color: #b00020; }
+  /* use case */
+  .use-case {
+    margin-top: 12px; padding-top: 10px;
+    border-top: 1px solid rgba(90, 70, 50, .14);
+    font-size: 13px; line-height: 1.5; color: #6e6458;
+  }
+  .use-case b { color: #b00020; }
+  /* reading summary */
+  .reading-summary {
+    margin-top: 26px;
+    background: #171717; color: #f8f2e7; border-radius: 12px;
+    padding: 16px 22px; display: flex; align-items: center; gap: 18px;
+    font-size: 15px;
+  }
+  .reading-summary b { color: #ffb3c0; }
+  .reading-summary .sep { width: 1px; height: 18px; background: #4b5563; }
+  /* more info */
+  .more-info {
+    margin-top: 20px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  .more-info .mi {
+    background: rgba(255, 252, 246, .80);
+    border: 1px solid rgba(90, 70, 50, .16);
+    border-radius: 12px; padding: 14px 18px;
+  }
+  .more-info .mi b { display: block; font-size: 14px; color: #b00020; margin-bottom: 4px; }
+  .more-info .mi p { margin: 0; font-size: 13.5px; line-height: 1.55; color: #5b5348; }
+
+
+  .tip-strip {
+    margin-top: 14px;
+    background: #fff; border: 1px solid rgba(90, 70, 50, .16);
+    border-radius: 12px; padding: 14px 20px;
+    font-size: 15px; line-height: 1.55; color: #5b5348;
+  }
+  .tip-strip b { color: #b00020; }
+  .outcome {
+    margin-top: 12px;
+    font-size: 13.5px; color: #b00020; font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .faq { min-height: 170px; }
+  .faq .a { font-size: 15px; line-height: 1.62; }
+
+
+  .server-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;
+    margin-top: 18px;
+  }
+  .server-grid span {
+    background: #f1e7d8; border: 1px solid rgba(90, 70, 50, .12);
+    border-radius: 7px; padding: 7px 8px;
+    font-size: 12.5px; color: #5b5348; text-align: center;
+  }
+  .server-note {
+    margin: 12px 0 0; font-size: 13px; line-height: 1.5; color: #6e6458;
+  }
+  .op-card > div:last-child { display: flex; flex-direction: column; }
+  .op-card .use-case { margin-top: auto; }
+  .self-check {
+    margin-top: 18px; background: #fff;
+    border: 1px solid rgba(90, 70, 50, .16); border-radius: 12px;
+    padding: 14px 18px;
+  }
+  .self-check b { display: block; font-size: 13px; color: #b00020; letter-spacing: .06em; margin-bottom: 7px; }
+  .self-check span {
+    display: inline-block; background: #f1e7d8; border-radius: 999px;
+    padding: 6px 10px; font-size: 12.5px; color: #5b5348; margin: 3px 6px 0 0;
+  }
+  .faq { min-height: 160px; }
+
+
+  .chips { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 16px; }
+  .chips span {
+    background: #f1e7d8; border: 1px solid rgba(90, 70, 50, .12);
+    border-radius: 999px; padding: 6px 10px;
+    font-size: 12px; color: #5b5348;
+  }
+  .cover-scenes {
+    position: relative; z-index: 2;
+    margin-top: 48px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(90, 70, 50, .18);
+    border-bottom: 1px solid rgba(90, 70, 50, .18);
+  }
+  .cover-scenes > div { padding: 14px 26px; border-right: 1px solid rgba(90, 70, 50, .14); }
+  .cover-scenes > div:first-child { padding-left: 0; }
+  .cover-scenes > div:last-child { border-right: 0; }
+  .cover-scenes b { display: block; font-size: 11.5px; color: #b00020; letter-spacing: .1em; }
+  .cover-scenes span { display: block; font-size: 17px; color: #171717; margin-top: 4px; }
+
+
+  .entry-card {
+    margin-top: 38px; max-width: 620px;
+    background: #fff; border: 1px solid rgba(90, 70, 50, .18);
+    border-radius: 14px; padding: 18px 22px;
+    box-shadow: 0 10px 24px rgba(60, 40, 20, .06);
+  }
+  .entry-k { font-size: 11.5px; color: #b00020; letter-spacing: .12em; font-weight: 600; }
+  .entry-v { font-size: 21px; line-height: 1.4; font-weight: 600; margin-top: 6px; }
+  .entry-s { font-size: 13px; line-height: 1.5; color: #6e6458; margin-top: 6px; }
+
+  /* print */
+  @media print {
+    html, body { background: #fff; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 COVER -->
+<section class="page cover">
+  <div class="top">
+    <div class="brand">
+      <div class="mark">价</div>
+      <div>
+        <div class="brand-name">剑网三物价助手</div>
+        <div class="brand-sub">JX3 PRICE LEDGER</div>
+      </div>
+    </div>
+    <div class="top-right">
+      <span class="pill red">玩家自制 · 游戏内数值</span>
+    </div>
+  </div>
+
+  <div class="cover-grid">
+    <div>
+      <div class="cover-kicker">剑网3 · 苍生铸世 50 级</div>
+      <h1>剑网三物价助手<span class="big">上手指南</span></h1>
+      <p class="lead">从打开网页版，到算清一炉配方的成本、金币和精力效率。<br>不用注册，不用下载，手机就能用。</p>
+
+      <div class="stats">
+        <div class="stat"><div class="n">154<small>条</small></div><div class="l">制造配方</div></div>
+        <div class="stat"><div class="n">17<small>个</small></div><div class="l">采集点</div></div>
+        <div class="stat"><div class="n">263<small>项</small></div><div class="l">物品价格</div></div>
+        <div class="stat"><div class="n">17<small>服</small></div><div class="l">独立物价</div></div>
+      </div>
+
+      <div class="entry-card">
+        <div class="entry-k">使用入口</div>
+        <div class="entry-v">扫码，或点击单页版里的「打开物价助手」</div>
+        <div class="entry-s">无需下载 · 数据保存在本机 · 入口见单页版</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="shot-frame">
+        <img src="assets/overview-crop.png" alt="总览界面">
+      </div>
+      <div class="shot-caption">总览 · 精力效率榜 · 本服物价一眼看</div>
+      <div style="margin-top:34px;display:flex;gap:10px;flex-wrap:wrap">
+        <span class="pill">网页版</span>
+        <span class="pill">手机端</span>
+        <span class="pill">本地存储</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-scenes">
+    <div><b>上线前</b><span>今天精力做什么效率最高</span></div>
+    <div><b>交易行前</b><span>这件材料本服多少钱</span></div>
+    <div><b>版本更新</b><span>配方改了，效率重算</span></div>
+  </div>
+
+  <div class="cover-toc">
+    <span><b>01</b>进入</span>
+    <span><b>02</b>上手</span>
+    <span><b>03</b>功能</span>
+    <span><b>04</b>操作</span>
+    <span><b>05</b>读数</span>
+    <span><b>06</b>手机</span>
+    <span><b>07</b>口径</span>
+    <span class="sp"></span>
+    <span class="hint">8 页 · 3 分钟看完</span>
+  </div>
+
+  <div class="foot">
+    <div><b>苍生铸世 · 50 级</b>　数据 v3.3　核验 2026-11-18</div>
+    <div>非官方玩家工具 · 仅游戏内数值，仅供游戏内参考</div>
+  </div>
+</section>
+
+<!-- 02 ACCESS -->
+<section class="page">
+  <div class="top">
+    <div class="brand">
+      <div class="mark">价</div>
+      <div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div>
+    </div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">02 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">01 · 进入</div>
+    <h2>先打开它：从入口进入</h2>
+    <p class="lead">扫码，或点击单页版里的「打开物价助手」；第一次打开不用登录，选个服务器就能看。</p>
+
+    <div class="grid-3" style="margin-top:30px">
+      <div class="card access-card">
+        <div class="num">01 / 入口</div>
+        <h3>从入口进入</h3>
+        <p class="desc">扫码或点击单页版里的「打开物价助手」，直接进入总览页，无需下载或注册。</p>
+        <div class="grow">
+          <div class="step-mini"><span class="n">1</span><p>扫码，或点开单页版里的入口</p></div>
+          <div class="step-mini"><span class="n">2</span><p>点击后进入总览页</p></div>
+          <div class="step-mini"><span class="n">3</span><p>右上角切换到你所在的服务器</p></div>
+        </div>
+        <div class="chips"><span>扫码</span><span>可点击</span><span>本地存储</span></div>
+        <div class="fit"><b>点不开？</b>换系统 PDF 查看器，或直接用二维码。</div>
+      </div>
+
+      <div class="card access-card">
+        <div class="num">02 / 准备</div>
+        <h3>先选服务器</h3>
+        <p class="desc">右上角下拉，选你所在的服。17 个当前服务器 + 自定义，每个服独立物价空间。</p>
+        <div class="grow">
+          <div class="fake-select" style="margin-top:14px">
+            <span class="dot"></span><span>梦江南</span><span class="sub">电信一区</span><span style="color:#94a3b8">▾</span>
+          </div>
+          <div class="server-grid">
+            <span>梦江南</span><span>破阵子</span><span>蝶恋花</span>
+            <span>剑胆琴心</span><span>幽月轮</span><span>九天</span>
+            <span>龙争虎斗</span><span>长安城</span><span>+ 9 个</span>
+          </div>
+        </div>
+        <div class="chips"><span>17 服</span><span>自定义</span><span>独立物价</span></div>
+        <div class="fit"><b>别选错：</b>服务器选错，材料价和金币都会跟着错。</div>
+      </div>
+
+      <div class="card access-card">
+        <div class="num">03 / 开始</div>
+        <h3>先用示例价</h3>
+        <p class="desc">第一次不用填完 263 项。先用示例价看趋势，再补最常用的 10 个材料。</p>
+        <div class="grow">
+          <div class="step-mini"><span class="n">1</span><p>打开总览，先看精力效率 Top 10</p></div>
+          <div class="step-mini"><span class="n">2</span><p>点任意一行，看成本拆解</p></div>
+          <div class="step-mini"><span class="n">3</span><p>去价格库补常用材料，效率自动重算</p></div>
+        </div>
+        <div class="chips"><span>示例价</span><span>先看趋势</span><span>再校准</span></div>
+        <div class="fit"><b>不用一次填完：</b>先补最常用的 10 个材料就够看趋势。</div>
+      </div>
+    </div>
+
+    <div class="notice">
+      <b>使用说明</b>
+      <span>网页版不需要下载；数据保存在本机。</span>
+    </div>
+    <div class="tip-strip"><b>第一次用：</b>先用示例价看趋势 → 补最常用的 10 个材料 → 回总览看 Top 10。不用一次填完 263 项。</div>
+  </div>
+
+  <div class="foot"><div><b>进入</b>　网页版 · 选服 · 示例价</div><div>仅游戏内数值，仅供游戏内参考</div></div>
+</section>
+
+<!-- 03 QUICK START -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><div class="mark">价</div><div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div></div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">03 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">02 · QUICK START</div>
+    <h2>3 步，把本服效率算准</h2>
+    <p class="lead">第一次用，先按这 3 步走；以后每天上线，只需要看第 3 步。</p>
+
+    <div class="grid-3" style="margin-top:28px">
+      <div class="card step-card">
+        <div class="step-num">01</div>
+        <h3>选服务器</h3>
+        <p class="desc">右上角下拉，选你所在的服。17 个当前服务器 + 自定义服务器，每个服独立价格空间。</p>
+        <div class="visual">
+          <div class="fake-select">
+            <span class="dot"></span>
+            <span>梦江南</span>
+            <span class="sub">电信一区</span>
+            <span style="color:#94a3b8">▾</span>
+          </div>
+          <div style="margin-top:14px" class="small">17 个服务器 · 每个服独立价格</div>
+          <div class="server-grid">
+            <span>梦江南</span><span>破阵子</span><span>蝶恋花</span>
+            <span>剑胆琴心</span><span>幽月轮</span><span>九天</span>
+            <span>龙争虎斗</span><span>长安城</span><span>+ 9 个</span>
+          </div>
+          <p class="server-note">切换服务器只换价格，配方库和自定义项共享。</p>
+        </div>
+        <div class="outcome">→ 本服价格空间已切换</div>
+        <div class="tip"><b>别选错：</b>服务器选错，材料价和效率都会跟着错。</div>
+      </div>
+
+      <div class="card step-card">
+        <div class="step-num">02</div>
+        <h3>校准价格</h3>
+        <p class="desc">价格库 → 批量录入。从游戏内交易行复制「物品名 价格」，粘贴后一次导入到当前服。</p>
+        <div class="visual"><img src="assets/prices-crop.png" alt="价格库批量录入"></div>
+        <div class="outcome">→ 缺价减少，效率更准</div>
+        <div class="tip"><b>懒人做法：</b>先补最常用的 10 个材料，其余用示例价看趋势。</div>
+      </div>
+
+      <div class="card step-card">
+        <div class="step-num">03</div>
+        <h3>看结论</h3>
+        <p class="desc">总览看 Top 10；点任意一行看成本拆解；分析页做 A/B 对比和满精力分配。</p>
+        <div class="visual"><img src="assets/overview-crop.png" alt="总览精力效率榜"></div>
+        <div class="outcome">→ 知道今天先做哪个</div>
+        <div class="tip"><b>先看「精力效率」，</b>再看单次金币和毛利率；缺价时效率会被低估。</div>
+      </div>
+    </div>
+
+    <div class="bottom-tip">
+      <b>三种价格状态：</b>已校准 / 示例 / 缺价　·　缺价的配方会提示「效率被低估」，补完价再下结论。
+    </div>
+  </div>
+
+  <div class="foot"><div><b>上手</b>　选服 → 校准 → 看结论</div><div>数据 v3.3 · 仅游戏内数值</div></div>
+</section>
+
+<!-- 04 MODULES -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><div class="mark">价</div><div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div></div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">04 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">03 · MODULES</div>
+    <h2>10 个模块，一张图看懂</h2>
+    <p class="lead">从「今天做什么」到「这笔材料贵在哪」，每个问题都有对应页面。</p>
+
+    <div class="module-grid">
+      <div class="card module-card">
+        <img src="assets/overview-crop.png" alt="总览">
+        <div class="mt"><b>01</b><h3>总览</h3></div>
+        <p>今天做什么效率最高？Top 10 + 今日精力分配 + 本服物价。</p>
+      </div>
+      <div class="card module-card">
+        <img src="assets/skills-crop.png" alt="生活技艺">
+        <div class="mt"><b>02</b><h3>生活技艺</h3></div>
+        <p>采集 3 + 制造 5，按技艺查配方，材料价内联改。</p>
+      </div>
+      <div class="card module-card">
+        <img src="assets/detail-crop.png" alt="配方详情">
+        <div class="mt"><b>03</b><h3>配方详情</h3></div>
+        <p>总成本、产值、单次金币，成本拆到每一种材料。</p>
+      </div>
+      <div class="card module-card">
+        <img src="assets/prices-crop.png" alt="价格库">
+        <div class="mt"><b>04</b><h3>价格库</h3></div>
+        <p>263 项物品，批量粘贴导入，已校准/示例/缺价三态。</p>
+      </div>
+      <div class="card module-card">
+        <img src="assets/analysis-crop.png" alt="精力效率分析">
+        <div class="mt"><b>05</b><h3>精力分析</h3></div>
+        <p>排行 + 散点/箱线 + A/B 对比 + 满精力分配。</p>
+      </div>
+      <div class="card module-card">
+        <img src="assets/settings-crop.png" alt="设置与备份">
+        <div class="mt"><b>06</b><h3>设置与备份</h3></div>
+        <p>17 服管理、JSON 备份、手机端使用。</p>
+      </div>
+    </div>
+
+    <div class="module-note">
+      另外 4 个能力：<b>配方编辑 / 新增</b>、<b>跨服比价</b>、<b>成本口径切换</b>、<b>CSV / PNG 导出</b>。
+    </div>
+  </div>
+
+  <div class="foot"><div><b>功能地图</b>　10 个模块覆盖「看物价 → 算成本 → 做决策」</div><div>全部数据可编辑 · 仅游戏内数值</div></div>
+</section>
+
+<!-- 05 OPERATIONS -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><div class="mark">价</div><div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div></div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">05 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">04 · HOW TO</div>
+    <h2>最常用的 4 个操作</h2>
+    <p class="lead">改配方、批量改价、换口径、满精力模拟——这四个会了，基本就够用。</p>
+
+    <div class="grid-2" style="margin-top:26px">
+      <div class="card op-card">
+        <img src="assets/edit-crop.png" alt="编辑配方">
+        <div>
+          <div class="k">01 / 配方</div>
+          <h3>改配方 / 新增配方</h3>
+          <ul>
+            <li>生活技艺 → 点配方行 → 详情抽屉 → 编辑配方</li>
+            <li>或右上角「新增配方 / 新增采集点」</li>
+            <li>可改等级、精力、手续费、产物、材料</li>
+          </ul>
+          <div class="note">内置配方可「恢复示例」；自定义配方可删除。</div>
+          <div class="use-case"><b>适合：</b>版本更新后改配方，或自建一套采集路线。</div>
+        </div>
+      </div>
+
+      <div class="card op-card">
+        <img src="assets/prices-crop.png" alt="批量改价">
+        <div>
+          <div class="k">02 / 价格</div>
+          <h3>批量改价</h3>
+          <ul>
+            <li>价格库 → 批量录入</li>
+            <li>从游戏内交易行复制「物品名 价格」，支持逗号/制表符/空格</li>
+            <li>只匹配已有物品，未匹配会单独提示</li>
+          </ul>
+          <div class="note">失焦或回车即保存；支持导出 CSV，完整备份用 JSON 导入 / 导出。</div>
+          <div class="use-case"><b>适合：</b>版本初期，先把常用材料补齐。</div>
+        </div>
+      </div>
+
+      <div class="card op-card">
+        <img src="assets/skills-crop.png" alt="成本口径">
+        <div>
+          <div class="k">03 / 口径</div>
+          <h3>换成本口径</h3>
+          <ul>
+            <li>生活技艺 / 分析页右上角：市场价 / 取最低</li>
+            <li>取最低：材料取 min(市场价, 自制成本 ÷ 产出数量)</li>
+            <li>它只优化材料成本，不把中间产物的精力计入最终配方</li>
+          </ul>
+          <div class="note">想比全链路精力效率，用市场价或合并成一条自定义配方。</div>
+          <div class="use-case"><b>适合：</b>有大量中间产物、想压材料成本时。</div>
+        </div>
+      </div>
+
+      <div class="card op-card">
+        <img src="assets/compare-crop.png" alt="满精力分配">
+        <div>
+          <div class="k">04 / 模拟</div>
+          <h3>满精力怎么分</h3>
+          <ul>
+            <li>分析页 → 满精力怎么分配</li>
+            <li>输入预算（默认 3000），按效率从高到低贪心分配</li>
+            <li>可重复制作，显示预计总金币 / 精力用尽 / 剩余</li>
+          </ul>
+          <div class="note">不建模交易税、暴击额外产出、市场深度；可用手续费手动修正。</div>
+          <div class="use-case"><b>适合：</b>精力快满，想知道先做哪个。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><div><b>核心操作</b>　配方 / 价格 / 口径 / 模拟</div><div>所有修改即时重算 · 仅游戏内数值</div></div>
+</section>
+
+<!-- 06 READING -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><div class="mark">价</div><div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div></div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">06 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">05 · READING</div>
+    <h2>别只看单次金币：3 个读数习惯</h2>
+    <p class="lead">同一个配方，换个口径就是另一个结论。先把下面这几个数看对。</p>
+
+    <div class="reading-grid">
+      <div class="formula">
+        <h3>计算口径</h3>
+        <div class="row"><span class="k">材料成本</span><span class="v">Σ（数量 × 单价）</span></div>
+        <div class="row"><span class="k">总成本</span><span class="v">材料成本 + 手续费</span></div>
+        <div class="row"><span class="k">产值</span><span class="v">Σ（产物数量 × 单价）</span></div>
+        <div class="row"><span class="k">单次金币</span><span class="v"><b>产值 − 总成本</b></span></div>
+        <div class="row"><span class="k">精力效率</span><span class="v"><b>单次金币 ÷ 精力</b></span></div>
+        <div class="row"><span class="k">毛利率</span><span class="v">单次金币 ÷ 产值</span></div>
+        <div style="margin-top:16px;font-size:12px;line-height:1.6;color:#94a3b8">
+          价格默认取本服市场价；交易税、暴击、署名溢价未自动计入。
+        </div>
+      </div>
+
+      <div class="read-tips">
+        <div class="tip-block">
+          <div class="rn">1</div>
+          <div><h4>先看「精力效率」</h4><p>同样 3000 精力，做不同配方差距可能很大。精力效率 = 单次金币 ÷ 精力，才是「每一份精力换多少金」。</p></div>
+        </div>
+        <div class="tip-block">
+          <div class="rn">2</div>
+          <div><h4>再看「成本 + 毛利率」</h4><p>单次金币高，可能压资金；毛利率高，可能周转快。两个一起看，才知道适不适合自己。</p></div>
+        </div>
+        <div class="tip-block">
+          <div class="rn">3</div>
+          <div><h4>看数据状态</h4><p>缺价 / 数据不全时，效率会被低估；先补价再下结论。别拿示例价当本服实时价。</p></div>
+        </div>
+        <div class="self-check">
+          <b>看榜前自检</b>
+          <span>服务器对吗？</span><span>缺价补了吗？</span><span>口径选对了吗？</span>
+        </div>
+      </div>
+    </div>
+
+    <table class="compare-table" style="margin-top:12px">
+      <thead><tr><th style="width:30%">容易踩的坑</th><th>更稳的读法</th></tr></thead>
+      <tbody>
+        <tr><td class="bad">只看单次金币</td><td class="good">同时看「精力效率 + 毛利率」</td></tr>
+        <tr><td class="bad">用别服 / 旧价直接算</td><td class="good">先校准本服价格，再看 Top 10</td></tr>
+        <tr><td class="bad">把示例价当实时行情</td><td class="good">当趋势参考，关键材料自己校准</td></tr>
+        <tr><td class="bad">把「取最低」当全链路</td><td class="good">它只优化材料成本，精力仍按本配方算</td></tr>
+      </tbody>
+    </table>
+
+    <div class="reading-summary">
+      <b>记住这 3 句</b>
+      <span>精力效率优先</span><span class="sep"></span>
+      <span>先补价，再看榜</span><span class="sep"></span>
+      <span>取最低只优化材料成本</span>
+    </div>
+  </div>
+
+  <div class="foot"><div><b>读数</b>　精力效率 > 单次金币　·　先补价再结论</div><div>公式与工具内一致 · 仅游戏内数值</div></div>
+</section>
+
+<!-- 07 MOBILE -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><div class="mark">价</div><div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div></div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">07 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">06 · 手机</div>
+    <h2>手机上用，数据不丢</h2>
+    <p class="lead">蹲交易行、等组队、躺床上都能查。数据默认存在本机，换手机前记得备份。</p>
+
+    <div class="mobile-grid">
+      <div>
+        <div class="mobile-list">
+          <div class="item">
+            <div class="ic">XHS</div>
+            <div><h4>手机端网页版</h4><p>扫码或点单页版入口打开；竖屏布局，总览 / 排行 / 价格 / 配方详情都在手机里。</p></div>
+          </div>
+          <div class="item">
+            <div class="ic">本地</div>
+            <div><h4>数据留在本机</h4><p>不需要登录；价格、配方和校准记录保存在本机，不上传服务器。</p></div>
+          </div>
+          <div class="item">
+            <div class="ic">备份</div>
+            <div><h4>JSON 备份</h4><p>换手机、清理缓存前，先在「设置与备份」导出 JSON，再到新设备导入。</p></div>
+          </div>
+        </div>
+
+        <div class="backup">
+          <h4>换设备 / 清缓存前：导出 JSON</h4>
+          <ol>
+            <li>设置与备份 → <b>导出 JSON 备份</b></li>
+            <li>新设备打开网页版 → <b>导入备份</b></li>
+            <li>覆盖当前配方、价格与设置，确认后自动重算</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="mobile-shot">
+        <img src="assets/mobile-crop.png" alt="手机端总览与精力效率榜">
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><div><b>手机端</b>　网页版 · 本机存储 · JSON 备份</div><div>仅游戏内数值，仅供游戏内参考</div></div>
+</section>
+
+<!-- 08 TRUST -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><div class="mark">价</div><div><div class="brand-name">剑网三物价助手</div><div class="brand-sub">JX3 PRICE LEDGER</div></div></div>
+    <div class="top-right"><span class="pill">上手指南</span><span class="page-no">08 / 08</span></div>
+  </div>
+
+  <div class="content">
+    <div class="kicker">07 · TRUST</div>
+    <h2>口径、边界与 FAQ</h2>
+    <p class="lead">先把「数据从哪来、什么没算」说清楚，比多算两个配方更重要。</p>
+
+    <div class="data-strip">
+      <span class="red">苍生铸世 · 50 级</span>
+      <span>数据 v3.3</span>
+      <span>核验 2026-11-18</span>
+      <span>154 制造 + 17 采集</span>
+      <span>263 物品</span>
+      <span>17 服物价</span>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq">
+        <div class="q"><span>Q1</span>为什么和游戏内交易行不一样？</div>
+        <div class="a">价格来自第三方攻略站的 17 服样本 / 示例价，不是实时行情；交易税、暴击、署名溢价也未自动计入。请以游戏内交易行为准。</div>
+      </div>
+      <div class="faq">
+        <div class="q"><span>Q2</span>为什么有「缺价」？</div>
+        <div class="a">该物品没有有效价格，效率会按 0 计，配方被标为「被低估」。去价格库补价后，全站会自动重算。</div>
+      </div>
+      <div class="faq">
+        <div class="q"><span>Q3</span>「取最低」为什么精力没变少？</div>
+        <div class="a">它只优化材料成本：逐层取 min(市场价, 自制成本 ÷ 产出数量)，不会把自制中间产物消耗的精力计入最终配方的精力分母。</div>
+      </div>
+      <div class="faq">
+        <div class="q"><span>Q4</span>暴击 / 交易税 / 署名怎么算？</div>
+        <div class="a">未自动建模。可以把税写进「手续费」；把暴击额外产出写进「产物数量」或减少材料数量，来近似修正。</div>
+      </div>
+    </div>
+
+    <div class="more-info">
+      <div class="mi"><b>配方库</b><p>154 条当前版本代表配方 + 17 个采集点；不是官方逐条数据，可在界面内新增 / 修改。</p></div>
+      <div class="mi"><b>价格</b><p>第三方攻略站 17 服样本；无报价 / 低样本回退示例价，可逐项校准。</p></div>
+      <div class="mi"><b>未建模</b><p>交易税、暴击额外产出、署名溢价、市场深度、跨服交易限制。</p></div>
+    </div>
+
+    <div class="disclaimer">
+      <div class="txt">
+        <b>玩家自制工具，非官方，与游戏厂商无关联。</b>
+        <p>本指南仅讨论游戏内生活技艺数值与工具操作，不涉及任何现实交易或游戏外服务。配方 / 等级 / 精力 / 材料来自第三方攻略站当前版本样本；价格为样本 / 示例价，可自行校准。计算结果仅供参考，不构成任何游戏内数值承诺。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><div><b>口径</b>　先看数据状态，再看效率</div><div>仅游戏内数值 · 仅供游戏内参考</div></div>
+</section>
+
+</body>
+</html>

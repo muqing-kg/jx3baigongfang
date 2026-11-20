@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据看板 · UI/UX 设计规范速查</title>
+<style>
+  :root{
+    --bg:#020817; --panel:#070e1c; --line:#1e293b; --fg:#f8fafc; --muted:#94a3b8;
+    --brand:#e10600; --blue:#1d6fe0; --green:#2e9e78; --orange:#e88a2e;
+    --purple:#a75be0; --pink:#e04a7a;
+    --radius:8px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+  header.hero{display:flex;gap:20px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:40px;height:40px;border-radius:10px;background:var(--brand);display:grid;place-items:center;
+    font-weight:800;font-size:15px;letter-spacing:-.02em}
+  h1{font-size:22px;line-height:1.3;margin:0;font-weight:600}
+  .sub{color:var(--muted);font-size:13px;margin-top:4px}
+  .pillrow{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--muted)}
+  nav.toc{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:36px;font-size:13px}
+  nav.toc a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
+  nav.toc a:hover{color:var(--fg);border-color:var(--brand)}
+  section{margin-bottom:44px}
+  h2{font-size:16px;font-weight:600;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  h2 .n{font-size:11px;font-weight:500;color:var(--muted);border:1px solid var(--line);
+    border-radius:4px;padding:1px 6px;letter-spacing:.04em}
+  .hint{color:var(--muted);font-size:12.5px;margin:0 0 18px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .swatch{height:64px;border-radius:6px;border:1px solid rgba(255,255,255,.06);margin-bottom:10px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+    font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:10px;border-bottom:1px solid rgba(30,41,59,.6);vertical-align:top}
+  td.num{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .kpi{border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;background:var(--panel)}
+  .kpi .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .kpi .v{font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+  .kpi .v small{font-size:12px;font-weight:500;color:var(--muted);margin-left:4px}
+  .kpi .d{font-size:11.5px;color:var(--green);margin-top:2px}
+  .type-row{display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px dashed rgba(30,41,59,.8)}
+  .type-row .spec{width:180px;flex:none;color:var(--muted);font-size:11.5px;letter-spacing:.03em}
+  .radius-row{display:flex;gap:14px;flex-wrap:wrap}
+  .rbox{width:86px;height:64px;border:1px solid var(--line);background:#0b1322;display:grid;place-items:center;
+    color:var(--muted);font-size:11px}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:90px}
+  .bars div{flex:1;background:linear-gradient(180deg,rgba(29,111,224,.9),rgba(29,111,224,.25));border-radius:3px}
+  .shot{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#000}
+  .shot img{display:block;width:100%;height:280px;object-fit:cover;object-position:top center}
+  .shot .cap{padding:8px 12px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+  .tag{display:inline-block;font-size:11px;border:1px solid var(--line);border-radius:4px;padding:2px 7px;
+    color:var(--muted);margin:2px 4px 2px 0}
+  .do{border-left:2px solid var(--green);padding-left:12px;margin:10px 0}
+  .dont{border-left:2px solid var(--brand);padding-left:12px;margin:10px 0}
+  .do b{color:#6ee7b7;font-size:12px;letter-spacing:.04em}
+  .dont b{color:#fda4af;font-size:12px;letter-spacing:.04em}
+  footer{border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12px}
+  code{background:#0b1322;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="brand">
+      <div class="logo">DS</div>
+      <div>
+        <h1>数据看板 · UI / UX 设计规范速查</h1>
+        <div class="sub">通用功能与交互基线 · 已剥离行业术语 · 可直接迁移到任意数据产品</div>
+      </div>
+    </div>
+    <div class="pillrow">
+      <span class="pill">Dark-first</span>
+      <span class="pill">Dense data UI</span>
+      <span class="pill">Card-as-module</span>
+      <span class="pill">Color as encoding</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <a href="#layout">布局</a><a href="#color">色彩</a><a href="#type">字阶</a>
+    <a href="#space">间距与形状</a><a href="#components">组件</a><a href="#charts">图表</a>
+    <a href="#modules">模块原型</a><a href="#rules">规则与反模式</a>
+  </nav>
+
+  <section id="layout">
+    <h2><span class="n">01</span>布局骨架</h2>
+    <p class="hint">固定侧栏 + 粘顶页头 + 12 列栅格；卡片与页面同底色，仅靠 1px 描边分层。</p>
+    <div class="kpis">
+      <div class="kpi"><div class="k">Sidebar</div><div class="v">256<small>px</small></div><div class="d">折叠 56px</div></div>
+      <div class="kpi"><div class="k">Header</div><div class="v">64<small>px</small></div><div class="d">backdrop-blur</div></div>
+      <div class="kpi"><div class="k">Content max</div><div class="v">1920<small>px</small></div><div class="d">超宽屏居中</div></div>
+      <div class="kpi"><div class="k">Grid</div><div class="v">12<small>col</small></div><div class="d">gap 16px</div></div>
+      <div class="kpi"><div class="k">Page padding</div><div class="v">24<small>px</small></div><div class="d">移动 16px</div></div>
+    </div>
+  </section>
+
+  <section id="color">
+    <h2><span class="n">02</span>色彩系统</h2>
+    <p class="hint">中性底色承载信息，彩色几乎全部用于编码：实体品牌色 &gt; 数据序列色 &gt; 语义状态色。品牌色只出现在 Logo、当前导航与强调。</p>
+    <div class="grid g4">
+      <div class="card"><div class="swatch" style="background:#020817"></div><div>Background</div><div class="mono">#020817 · 222.2 84% 4.9%</div></div>
+      <div class="card"><div class="swatch" style="background:#0f172a"></div><div>Sidebar</div><div class="mono">#0F172A · 222.2 47% 11.2%</div></div>
+      <div class="card"><div class="swatch" style="background:#1e293b"></div><div>Border / Accent</div><div class="mono">#1E293B · 217.2 32.6% 17.5%</div></div>
+      <div class="card"><div class="swatch" style="background:#f8fafc"></div><div>Foreground</div><div class="mono">#F8FAFC · 210 40% 98%</div></div>
+      <div class="card"><div class="swatch" style="background:#94a3b8"></div><div>Muted FG</div><div class="mono">#94A3B8 · 215 20.2% 65.1%</div></div>
+      <div class="card"><div class="swatch" style="background:#e10600"></div><div>Brand</div><div class="mono">#E10600 · 2 100% 44%</div></div>
+      <div class="card"><div class="swatch" style="background:#a75be0"></div><div>Peak / 最优（紫）</div><div class="mono">280 100% 65%</div></div>
+      <div class="card"><div class="swatch" style="background:#e04a7a"></div><div>Danger（玫红）</div><div class="mono">345 88% 52%</div></div>
+    </div>
+
+    <h2 style="margin-top:26px;font-size:14px">实体品牌色（数据编码示例）</h2>
+    <div class="radius-row" style="margin-top:10px">
+      <div class="rbox" style="background:linear-gradient(135deg,#28f3d2,#0f766e);border:0;color:#04231f;font-weight:700">实体 A</div>
+      <div class="rbox" style="background:linear-gradient(135deg,#e80020,#5b0010);border:0;color:#fff;font-weight:700">实体 B</div>
+      <div class="rbox" style="background:linear-gradient(135deg,#3671c6,#0b2a5b);border:0;color:#fff;font-weight:700">实体 C</div>
+      <div class="rbox" style="background:linear-gradient(135deg,#ff8000,#7a3d00);border:0;color:#fff;font-weight:700">实体 D</div>
+      <div class="rbox" style="background:linear-gradient(135deg,#6692ff,#1e3a8a);border:0;color:#fff;font-weight:700">实体 E</div>
+      <div class="rbox" style="background:linear-gradient(135deg,#0093cc,#003a52);border:0;color:#fff;font-weight:700">实体 F</div>
+    </div>
+    <p class="hint" style="margin-top:12px">规则：实体品牌色由后端下发 <code>entity_color_rgb</code>，只用于色块、描边、渐变与图表填充，<b>永远不用作文字颜色</b>（对比度不可控）。</p>
+  </section>
+
+  <section id="type">
+    <h2><span class="n">03</span>字体与字阶</h2>
+    <p class="hint">纯系统字体栈，零网络字体成本；数字统一等宽对齐（tabular-nums）。全站仅 4 档字重：400 / 500 / 600 / 700。</p>
+    <div class="card">
+      <div class="type-row"><div class="spec">KPI · 28/32 · 700</div><div style="font-size:28px;font-weight:700;font-variant-numeric:tabular-nums">1.99<span style="font-size:13px;color:var(--muted);font-weight:500">s</span></div></div>
+      <div class="type-row"><div class="spec">H1 / H2 · 20/28 · 600</div><div style="font-size:20px;font-weight:600">年度结果汇总</div></div>
+      <div class="type-row"><div class="spec">Card title · 16/24 · 600</div><div style="font-size:16px;font-weight:600">耗时排行 Top 20</div></div>
+      <div class="type-row"><div class="spec">Body · 14/20 · 400</div><div>仅统计有效样本，离群值按阈值剔除后再计算均值。</div></div>
+      <div class="type-row"><div class="spec">Label · 12/16 · 500 · 大写</div><div style="font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)">距下一名差距</div></div>
+      <div class="type-row" style="border-bottom:0"><div class="spec">Micro · 10/16 · 600 · 大写</div><div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">周期统计</div></div>
+    </div>
+  </section>
+
+  <section id="space">
+    <h2><span class="n">04</span>间距、圆角与海拔</h2>
+    <div class="grid g2">
+      <div class="card">
+        <div class="hint" style="margin:0 0 12px">4px 基准栅格：4 / 8 / 12 / 16 / 20 / 24 / 32 / 40 / 48</div>
+        <div class="bars"><div style="height:16%"></div><div style="height:32%"></div><div style="height:48%"></div><div style="height:64%"></div><div style="height:80%"></div><div style="height:100%"></div></div>
+      </div>
+      <div class="card">
+        <div class="hint" style="margin:0 0 12px">圆角：卡片 8 · 控件 6 · 标签 4 · 头像全圆</div>
+        <div class="radius-row">
+          <div class="rbox" style="border-radius:8px">8px</div>
+          <div class="rbox" style="border-radius:6px">6px</div>
+          <div class="rbox" style="border-radius:4px">4px</div>
+          <div class="rbox" style="border-radius:999px">9999</div>
+        </div>
+        <p class="hint" style="margin:12px 0 0">普通卡片无阴影；阴影仅用于弹层：<span class="mono">0 12px 48px rgba(0,0,0,.27)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="components">
+    <h2><span class="n">05</span>组件语法</h2>
+    <p class="hint">一条主线：卡片即模块。标题在卡片内，控件在标题行右侧，口径说明常驻标题下方。</p>
+    <div class="grid g2">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <div style="font-weight:600">按对象的平均耗时</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span class="tag">⤓</span><span class="tag">⋯</span>
+          </div>
+        </div>
+        <div style="color:var(--muted);font-size:12px;margin-bottom:14px">已排除异常样本 · 共 688 次</div>
+        <table>
+          <thead><tr><th>对象</th><th style="text-align:right">均值</th><th style="text-align:right">差值</th></tr></thead>
+          <tbody>
+            <tr><td>对象 A</td><td class="num" style="text-align:right">2.45</td><td class="num" style="text-align:right;color:var(--green)">−0.12</td></tr>
+            <tr><td>对象 B</td><td class="num" style="text-align:right">2.61</td><td class="num" style="text-align:right;color:var(--muted)">—</td></tr>
+            <tr><td>对象 C</td><td class="num" style="text-align:right">2.84</td><td class="num" style="text-align:right;color:#fda4af">+0.31</td></tr>
+          </tbody>
+        </table>
+        <p class="hint" style="margin:12px 0 0">表头 12/500 大写；数值右对齐等宽；颜色 + 符号双重编码。</p>
+      </div>
+
+      <div class="card">
+        <div class="hint" style="margin:0 0 10px">KPI 卡：指标名 + 数值 + 单位 + 环比句式</div>
+        <div class="kpis" style="grid-template-columns:1fr 1fr">
+          <div class="kpi" style="background:transparent"><div class="k">累计损耗</div><div class="v">$27.5<small>M</small></div><div class="d">+2.28% 较上周期</div></div>
+          <div class="kpi" style="background:transparent"><div class="k">最优单次耗时</div><div class="v">1.99<small>s</small></div><div class="d">第 11 场 · 分组 B</div></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center">
+          <span class="tag" style="background:#1e293b;color:#f8fafc;border-color:transparent">全部</span>
+          <span class="tag">子集 A</span><span class="tag">子集 B</span><span class="tag">子集 C</span>
+          <span style="margin-left:auto;font-size:12px;color:var(--muted)">分段控件 32px</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:14px;font-size:12px;color:var(--muted)">
+          <span>排除异常</span>
+          <span style="width:36px;height:20px;border-radius:999px;background:#334155;display:inline-block;position:relative">
+            <span style="position:absolute;left:8px;top:4px;width:12px;height:12px;border-radius:999px;background:#e2e8f0"></span>
+          </span>
+          <span style="margin-left:auto">离群阈值</span>
+          <span style="width:100px;height:4px;border-radius:2px;background:#1e293b;display:inline-block;position:relative">
+            <span style="position:absolute;left:70%;top:-5px;width:14px;height:14px;border-radius:999px;background:#e2e8f0"></span>
+          </span>
+          <span class="mono" style="color:#f8fafc">107%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="charts">
+    <h2><span class="n">06</span>图表选型</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>要回答的问题</th><th>图表</th><th>典型用法</th></tr></thead>
+        <tbody>
+          <tr><td>谁高谁低</td><td>水平条形（按值排序）</td><td>按对象的平均耗时排行</td></tr>
+          <tr><td>趋势</td><td>多折线 / 面积</td><td>累计值、指标演化</td></tr>
+          <tr><td>名次变化</td><td>Bump Chart</td><td>榜单排名演化</td></tr>
+          <tr><td>稳定性</td><td>箱线图 + 参考线</td><td>分布稳定性 · 入围阈值</td></tr>
+          <tr><td>构成</td><td>环形图（中心放总数）</td><td>类型构成 · 470 条</td></tr>
+          <tr><td>二维分布</td><td>气泡散点</td><td>时间分布、相似度地图</td></tr>
+          <tr><td>矩阵对比</td><td>热力图</td><td>配额使用 · 属性矩阵</td></tr>
+          <tr><td>转换/流向</td><td>桑基图</td><td>起点 → 终点的状态流转</td></tr>
+        </tbody>
+      </table>
+      <p class="hint" style="margin:14px 0 0">硬规则：一卡一图 · 标题即问题 · 口径说明 12px 常驻 · 每卡独立导出 · 不做 3D / 双轴 / 饼图。</p>
+    </div>
+  </section>
+
+  <section id="modules">
+    <h2><span class="n">07</span>模块原型与参考版式</h2>
+    <p class="hint">下列截图仅用于参考版式与信息密度，图中的业务内容与本文无关。</p>
+    <div class="grid g2">
+      <div class="shot"><img src="assets/overview.jpg" alt="总览页" loading="lazy"/><div class="cap">总览页 · 状态卡 + 周期指标 + 双榜 + 动态流</div></div>
+      <div class="shot"><img src="assets/results.jpg" alt="结果汇总" loading="lazy"/><div class="cap">结果汇总 · 纪录卡 + 总表 + 按场次矩阵</div></div>
+      <div class="shot"><img src="assets/profile.jpg" alt="个体详情" loading="lazy"/><div class="cap">个体详情 · 关系型 KPI + 叙事型图表链</div></div>
+      <div class="shot"><img src="assets/compare.jpg" alt="双对象对比" loading="lazy"/><div class="cap">双对象对比 · 预设组合 + 发散条形</div></div>
+      <div class="shot"><img src="assets/quota.jpg" alt="配额与消耗" loading="lazy"/><div class="cap">配额与消耗 · 矩阵 + 扣减明细</div></div>
+      <div class="shot"><img src="assets/attributes.jpg" alt="多维属性矩阵" loading="lazy"/><div class="cap">多维属性矩阵 · 特性热力图 + 相似度气泡</div></div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <h2><span class="n">08</span>六条硬规则与反模式</h2>
+    <div class="grid g2">
+      <div class="card">
+        <div class="do"><b>DO</b><br/>每张卡只回答一个问题，标题即问题。</div>
+        <div class="do"><b>DO</b><br/>控件贴着数据放（卡片头部右侧 40px 内）。</div>
+        <div class="do"><b>DO</b><br/>凡是"平均/排除/估算"，都在标题下写一句 12px 口径。</div>
+        <div class="do"><b>DO</b><br/>数字等宽对齐，KPI 带单位与对比基准。</div>
+      </div>
+      <div class="card">
+        <div class="dont"><b>DON'T</b><br/>用颜色单独表达状态（必须叠加符号/文字）。</div>
+        <div class="dont"><b>DON'T</b><br/>让品牌色与风险色混用。</div>
+        <div class="dont"><b>DON'T</b><br/>只给 <code>Loading...</code> 文本，必须有骨架屏。</div>
+        <div class="dont"><b>DON'T</b><br/>把筛选状态留在内存里——必须写入 URL。</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    详细版：<a href="01-设计规范.md">01-设计规范.md</a> · <a href="02-模块交互规范.md">02-模块交互规范.md</a> ·
+    令牌：<a href="design-tokens.css">design-tokens.css</a> / <a href="03-design-tokens.json">03-design-tokens.json</a>
+  </footer>
+</div>
+</body>
+</html>

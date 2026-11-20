@@ -1,0 +1,39 @@
+name: Sync prices to WeChat Cloud
+
+# 手动把当前 catalog 的物价写入微信云开发数据库 prices/current。
+# 日常自动同步由 update-jx3-prices.yml 在物价更新后执行。
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-wechat-prices
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build and sync cloud prices
+        env:
+          WX_APPID: ${{ secrets.WX_APPID }}
+          WX_APPSECRET: ${{ secrets.WX_APPSECRET }}
+          TCB_ENV_ID: ${{ secrets.TCB_ENV_ID }}
+        run: |
+          if [ -z "$WX_APPID" ] || [ -z "$WX_APPSECRET" ] || [ -z "$TCB_ENV_ID" ]; then
+            echo "WX_APPID / WX_APPSECRET / TCB_ENV_ID 未配置，跳过云同步。"
+            exit 0
+          fi
+          node miniapp/scripts/build-remote-prices.mjs
+          node miniapp/scripts/sync-cloudbase-prices.mjs
+          node miniapp/scripts/sync-cloudbase-history.mjs

@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "d7d5eac0004f981e42abbbf8b6d65375222f92d1",
+  "date": "2026-11-20",
+  "title": "物价走势发布 · 小程序云端历史",
+  "notes": [
+    "新增「物价走势」：历史节点、全部技艺/类型、物品搜索/多选、价格分布、涨跌红黑榜与热力图；价格分布默认指数，可切原始金币，支持散点、单品折线、按节点折叠原始数据与 PNG/CSV 导出",
+    "修复 CDN 返回旧 version.json 时反复显示“行情更新中”的问题；远程旧行情不再覆盖本地新数据",
+    "移动端无 Service Worker 时也能用 updates.json 检查更新，不再直接提示“浏览器不支持更新检查”",
+    "小程序「物价走势」改为优先读云端历史：Action 每次更新写入 history_*，最多 7 天，本地缓存 1 小时，失败回退离线快照"
+  ],
+  "history": [
+    {
+      "version": "d7d5eac",
+      "date": "2026-11-20",
+      "title": "restore release notes for mini program trends"
+    },
+    {
+      "version": "64d3244",
+      "date": "2026-11-20",
+      "title": "update mini program page count"
+    },
+    {
+      "version": "221103f",
+      "date": "2026-11-20",
+      "title": "rebuild mini program bundles for cloud trends"
+    },
+    {
+      "version": "ad802b1",
+      "date": "2026-11-20",
+      "title": "include mini program trends build"
+    },
+    {
+      "version": "6ccc443",
+      "date": "2026-11-20",
+      "title": "走势历史接入微信云"
+    },
+    {
+      "version": "67b2619",
+      "date": "2026-11-20",
+      "title": "行情同步与移动端更新检查"
+    }
+  ]
+}

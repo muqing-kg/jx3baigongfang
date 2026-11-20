@@ -1,0 +1,21 @@
+* text=auto
+
+# bash / node / python 脚本在 Linux 构建环境里执行，必须是 LF
+*.sh text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.css text eol=lf
+
+# 二进制素材不要做行尾转换
+*.png binary
+*.jpg binary
+*.ico binary
+*.webp binary
+*.glb binary
+*.zip binary
+*.xlsx binary
+*.xlsm binary
+*.woff2 binary
